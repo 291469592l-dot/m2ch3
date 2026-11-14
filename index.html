@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M2A 第3章「更多三角函数」全解拆解 · HKDSE Extended Part Module 2</title>
+<style>
+:root{
+  --paper:#fbfaf7; --panel:#ffffff; --ink:#151c24; --ink2:#55606d; --ink3:#8b95a1;
+  --line:#e5e0d6; --accent:#a8342b; --accent2:#1b3a5c; --gold:#b0792a;
+  --code:#f5f2ea; --shadow:0 1px 2px rgba(20,25,35,.05),0 8px 24px -18px rgba(20,25,35,.35);
+  --lv1:#1c6b3f; --lv1bg:#e8f4ec; --lv2:#a35a12; --lv2bg:#fdf0e1; --lv3:#a8342b; --lv3bg:#f9e7e5;
+}
+[data-theme="dark"]{
+  --paper:#0f1419; --panel:#161c23; --ink:#e8ebef; --ink2:#a7b2bf; --ink3:#77828f;
+  --line:#28313b; --accent:#e07b70; --accent2:#94b4d8; --gold:#d9a758;
+  --code:#1b222a; --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -20px rgba(0,0,0,.9);
+  --lv1:#6fce9a; --lv1bg:#15301f; --lv2:#e0a860; --lv2bg:#332512; --lv3:#e88a80; --lv3bg:#3a1d1b;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font:16px/1.78 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:Georgia,"Songti SC","Times New Roman",serif;font-weight:600;line-height:1.32;margin:0}
+a{color:var(--accent2);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ---------- top bar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:14px;
+  padding:10px 26px;border-bottom:1px solid var(--line);
+  background:rgba(251,250,247,.88);backdrop-filter:blur(10px);
+}
+[data-theme="dark"] .topbar{background:rgba(15,20,25,.88)}
+.topbar .brand{font-family:Georgia,serif;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}
+.topbar .brand b{color:var(--accent);letter-spacing:.12em}
+.topbar .spacer{flex:1}
+.btn{
+  font:500 13px/1 inherit;color:var(--ink2);background:var(--panel);border:1px solid var(--line);
+  padding:8px 13px;border-radius:999px;cursor:pointer;transition:.18s;white-space:nowrap;
+}
+.btn:hover{color:var(--accent);border-color:var(--accent)}
+
+/* ---------- layout ---------- */
+.wrap{display:grid;grid-template-columns:236px minmax(0,1fr);gap:46px;max-width:1360px;margin:0 auto;padding:34px 28px 80px}
+main{min-width:0}
+aside.toc{position:sticky;top:74px;align-self:start;max-height:calc(100vh - 100px);overflow-y:auto;font-size:13.5px;padding-right:6px}
+aside.toc h4{font:600 11px/1 inherit;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin:0 0 12px;font-family:-apple-system,sans-serif}
+aside.toc a{display:block;padding:5px 10px;border-left:2px solid transparent;color:var(--ink2);border-radius:0 6px 6px 0;transition:.16s}
+aside.toc a:hover{background:var(--code);text-decoration:none;color:var(--ink)}
+aside.toc a.active{color:var(--accent);border-left-color:var(--accent);background:var(--code);font-weight:600}
+aside.toc a.sub{padding-left:22px;font-size:12.7px;color:var(--ink3)}
+@media (max-width:560px){
+  .topbar{padding:8px 12px;gap:8px}
+  .topbar .brand{font-size:12px;letter-spacing:.04em}
+  .btn{font-size:12px;padding:7px 10px}
+  .hero{padding:26px 20px}
+  .card{padding:16px 15px}
+  .tablewrap{border-radius:10px}
+  th,td{padding:7px 9px;font-size:13.4px}
+  section{margin-bottom:40px}
+}
+@media (max-width:1060px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:22px 16px 70px}
+  aside.toc{display:none}
+}
+
+/* ---------- hero ---------- */
+.hero{border:1px solid var(--line);border-radius:18px;padding:40px 38px;background:
+  radial-gradient(120% 130% at 100% 0%, rgba(168,52,43,.07), transparent 55%),
+  radial-gradient(110% 120% at 0% 100%, rgba(27,58,92,.07), transparent 55%), var(--panel);
+  box-shadow:var(--shadow);
+}
+.hero .kicker{font:600 12px/1 -apple-system,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-size:clamp(28px,4.2vw,46px);margin:16px 0 6px;letter-spacing:-.01em}
+.hero h1 span{color:var(--accent)}
+.hero .sub{font-size:16.5px;color:var(--ink2);max-width:64ch}
+.hero .en{font-family:Georgia,serif;font-style:italic;color:var(--ink3);font-size:15px;margin-top:4px}
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+.chip{
+  font-size:12.6px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);
+  background:var(--code);color:var(--ink2)
+}
+.chip b{color:var(--ink);font-weight:600}
+
+/* ---------- sections ---------- */
+section{scroll-margin-top:82px;margin-bottom:58px}
+.sec-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:22px}
+.sec-head .no{
+  font-family:Georgia,serif;font-size:13px;letter-spacing:.14em;color:#fff;background:var(--accent2);
+  padding:4px 10px;border-radius:6px;flex:none
+}
+[data-theme="dark"] .sec-head .no{color:#0f1419}
+.sec-head h2{font-size:clamp(21px,2.6vw,28px)}
+.sec-head .pg{margin-left:auto;font-size:13px;color:var(--ink3);font-family:Georgia,serif;font-style:italic}
+
+h3{font-size:19px;margin:26px 0 10px}
+h3::before{content:"§";color:var(--accent);margin-right:7px;font-size:15px;vertical-align:1px}
+h4{font-size:15.5px;margin:18px 0 8px;color:var(--accent2)}
+p{margin:9px 0}
+ul,ol{margin:9px 0;padding-left:22px}
+li{margin:5px 0}
+ul.clean{list-style:none;padding-left:0}
+ul.clean li{padding-left:20px;position:relative}
+ul.clean li::before{content:"▸";position:absolute;left:2px;color:var(--accent)}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0;box-shadow:var(--shadow)}
+.card.tight{padding:16px 18px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+
+/* ---------- math ---------- */
+.math,.formula{font-family:"Cambria Math",Cambria,Georgia,"Times New Roman",serif;font-size:17px;line-height:1.9}
+.math em,.formula em{font-style:italic;font-family:Georgia,serif}
+.formula{background:var(--code);border-left:3px solid var(--gold);padding:12px 16px;border-radius:0 10px 10px 0;margin:11px 0;overflow-x:auto}
+.formula>b{font-weight:600;color:var(--accent);font-family:-apple-system,sans-serif;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.eq{display:block;margin:7px 0}
+.f{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 .2em;font-size:.94em;line-height:1.22;position:relative;top:-0.05em}
+.f>i{display:block;padding:0 .32em .05em;border-bottom:1.3px solid currentColor;font-style:normal;white-space:nowrap}
+.f>b{display:block;padding:.05em .32em 0;font-weight:400;white-space:nowrap}
+.sq{font-size:.8em;vertical-align:.28em}
+
+/* ---------- callouts ---------- */
+.note,.warn,.tip{border-radius:10px;padding:13px 16px;margin:14px 0;font-size:14.6px;border:1px solid var(--line);background:var(--code)}
+.note{border-left:3px solid var(--accent2)}
+.warn{border-left:3px solid var(--accent);background:var(--lv3bg)}
+.tip{border-left:3px solid var(--lv1);background:var(--lv1bg)}
+.lbl{display:block;font-family:-apple-system,sans-serif;font-size:12.4px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;margin-bottom:5px;opacity:.9}
+.warn .lbl{color:var(--accent)} .tip .lbl{color:var(--lv1)} .note .lbl{color:var(--accent2)}
+
+/* ---------- badges / pills ---------- */
+.badge{display:inline-block;font:600 11.5px/1 -apple-system,sans-serif;padding:4px 9px;border-radius:999px;letter-spacing:.04em;vertical-align:middle}
+.lv1{background:var(--lv1bg);color:var(--lv1)} .lv2{background:var(--lv2bg);color:var(--lv2)} .lv3{background:var(--lv3bg);color:var(--lv3)}
+.pill{display:inline-block;font-size:12.4px;padding:3px 10px;border-radius:999px;background:var(--code);border:1px solid var(--line);color:var(--ink2);margin:2px 4px 2px 0}
+
+/* ---------- tables ---------- */
+.tablewrap{overflow-x:auto;margin:14px 0;border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:14.3px;background:var(--panel)}
+th,td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--code);font:600 12.6px/1.4 -apple-system,sans-serif;letter-spacing:.04em;color:var(--ink2);white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--code)}
+td.c,th.c{text-align:center}
+table.mono td,table.mono th{font-family:"Cambria Math",Cambria,Georgia,serif;font-size:15px}
+
+/* ---------- details ---------- */
+details.example{border:1px solid var(--line);border-radius:12px;background:var(--panel);margin:12px 0;overflow:hidden}
+details.example>summary{cursor:pointer;padding:14px 18px;display:flex;gap:12px;align-items:baseline;list-style:none;font-size:15px}
+details.example>summary::-webkit-details-marker{display:none}
+details.example>summary::after{content:"＋";margin-left:auto;color:var(--ink3);font-size:15px}
+details.example[open]>summary::after{content:"－"}
+details.example>summary:hover{background:var(--code)}
+details.example .body{padding:2px 18px 18px;border-top:1px dashed var(--line)}
+.ex-no{font-family:Georgia,serif;font-weight:700;color:var(--accent);flex:none}
+.ex-title{font-weight:600}
+
+/* ---------- map ---------- */
+.map{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}
+.map .node{position:relative;border:1px solid var(--line);border-radius:12px;padding:16px 16px 14px;background:var(--panel)}
+.map .node .k{font:600 11.5px/1 -apple-system,sans-serif;letter-spacing:.14em;color:var(--accent);text-transform:uppercase}
+.map .node h4{margin:8px 0 6px;color:var(--ink);font-size:15.5px}
+.map .node p{margin:0;font-size:13.4px;color:var(--ink2);line-height:1.6}
+.map .node .pd{position:absolute;top:12px;right:14px;font-size:11.5px;color:var(--ink3);font-family:Georgia,serif;font-style:italic}
+
+/* ---------- filters ---------- */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.filters .btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* ---------- checklist ---------- */
+.check{display:grid;gap:8px}
+.check label{display:flex;gap:10px;align-items:flex-start;font-size:14.6px;padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:var(--panel);cursor:pointer;transition:.15s}
+.check label:hover{border-color:var(--accent)}
+.check input{margin-top:5px;accent-color:var(--accent);flex:none}
+.check input:checked + span{text-decoration:line-through;color:var(--ink3)}
+.bar{height:8px;border-radius:99px;background:var(--code);overflow:hidden;margin:12px 0 4px;border:1px solid var(--line)}
+.bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent2),var(--accent));transition:width .3s}
+
+footer{border-top:1px solid var(--line);padding:26px 0 0;color:var(--ink3);font-size:13px;line-height:1.8}
+
+@media print{
+  .topbar,aside.toc,.filters,.btn{display:none!important}
+  .wrap{display:block;padding:0;max-width:none}
+  body{font-size:11pt;background:#fff;color:#000}
+  .card,.hero{box-shadow:none;break-inside:avoid}
+  section{break-inside:auto;margin-bottom:26px}
+  details.example{break-inside:avoid}
+  details.example>summary::after{content:""}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><b>M2A</b> · Ch.3 Breakdown</div>
+  <div class="spacer"></div>
+  <button class="btn" id="themeBtn">🌗 深色 / 浅色</button>
+  <button class="btn" onclick="window.print()">🖨 打印 / 存 PDF</button>
+</div>
+
+<div class="wrap">
+<aside class="toc">
+  <h4>目录</h4>
+  <a href="#hero">封面与阅读说明</a>
+  <a href="#map">① 全章知识地图</a>
+  <a href="#s31" class="sub">3.1 弧度制</a>
+  <a href="#s32" class="sub">3.2 六个三角函数</a>
+  <a href="#s33" class="sub">3.3 三角恒等式</a>
+  <a href="#s34" class="sub">3.4 复角公式</a>
+  <a href="#s35" class="sub">3.5 二倍角公式</a>
+  <a href="#s36" class="sub">3.6 和积公式</a>
+  <a href="#formulas">② 公式总表</a>
+  <a href="#strategy">③ 六大解题套路</a>
+  <a href="#traps">④ 易错 &amp; 陷阱清单</a>
+  <a href="#examples">⑤ 31 个例题索引</a>
+  <a href="#exercises">⑥ 练习体系矩阵</a>
+  <a href="#dse">⑦ DSE 真题年表</a>
+  <a href="#roadmap">⑧ 学习路线与自测</a>
+</aside>
+
+<main>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="hero">
+  <div class="kicker">HKDSE · Mathematics Extended Part · Module 2 (Algebra &amp; Calculus)</div>
+  <h1>第 3 章 <span>更多三角函数</span><br>教材全解拆解</h1>
+  <div class="sub">More about Trigonometric Functions —— 依据《OSM_TBPDF_M2A03_e.pdf》（Oxford University Press，2023 年版，全 72 页）逐节拆解：知识结构、公式推导链、31 个例题考点、7 组练习题型矩阵、9 套 HKDSE 真题索引与个人学习路线。</div>
+  <div class="en">Source: Book M2A, Chapter 3, pp. 3.1 – 3.72 · PDF pages 1 – 72</div>
+  <div class="chips">
+    <span class="chip">📄 <b>72</b> 页</span>
+    <span class="chip">📚 <b>6</b> 节 · <b>3.1–3.6</b></span>
+    <span class="chip">✍️ <b>31</b> 个例题</span>
+    <span class="chip">🧩 <b>6</b> 组节练习 + 1 组综合练习</span>
+    <span class="chip">🎯 <b>9</b> 套 DSE 真题（2012–2022）</span>
+    <span class="chip">🧪 <b>2</b> 个数学归纳法应用</span>
+  </div>
+  <div class="note" style="margin-top:26px"><span class="lbl">阅读约定</span>
+    ① 本拆解中 <span class="pill">例 N</span> 与教材例题编号完全一致，并标注教材页码（教材页码 = PDF 页码，如 <span class="pill">p.3.23</span> = PDF 第 23 页）。
+    ② <span class="badge lv1">Level 1</span> <span class="badge lv2">Level 2</span> <span class="badge lv3">Level 3</span> 为教材自带的难度分级，与练习的 Level 分层一一对应。
+    ③ 原文中的 θ 在 PDF 文本层被提取为「i」、π 被提取为「r」、° 被提取为「c」；本文已按原书真正的数学符号还原（θ、π、°）。
+    ④ 折线可点击的「例题」为可展开的详解，打印时会自动展开。
+  </div>
+</header>
+
+<!-- ================= MAP ================= -->
+<section id="map">
+  <div class="sec-head"><span class="no">①</span><h2>全章知识地图</h2><span class="pg">pp. 3.1 – 3.72</span></div>
+
+  <p>本章是一条单向递进的「公式生产线」：先换单位（弧度），再扩充函数族（六个函数），再用恒等式做代数变形，最后把「角的和差」变成「函数的乘加」。前一步永远是后一步的工具，所以**跳步学习会立刻卡住**。</p>
+
+  <div class="map">
+    <div class="node"><div class="pd">3.1</div><div class="k">Foundation</div><h4>弧度制 Radian Measure</h4><p>θ = ℓ/r；180° = π rad。整章从此开始「只说弧度」。</p></div>
+    <div class="node"><div class="pd">3.2</div><div class="k">Definitions</div><h4>六个三角函数 Six Ratios</h4><p>cosec / sec / cot 的定义、符号（CAST）、特殊角、解方程。</p></div>
+    <div class="node"><div class="pd">3.3</div><div class="k">Algebra</div><h4>三角恒等式 Identities</h4><p>倒数、商、平方恒等式 + n·90°±θ 诱导公式的完整表。</p></div>
+    <div class="node"><div class="pd">3.4</div><div class="k">Core</div><h4>复角公式 Compound Angle</h4><p>sin/cos/tan 的 (A±B) 六条公式，全章最重要的工具。</p></div>
+    <div class="node"><div class="pd">3.5</div><div class="k">Derived</div><h4>二倍角公式 Double Angle</h4><p>令 B = A 的特例；降幂公式与三倍角的应用。</p></div>
+    <div class="node"><div class="pd">3.6</div><div class="k">Sum ↔ Product</div><h4>和积互化 Formulae</h4><p>积化和差 + 和差化积，DSE 长题的标准武器。</p></div>
+  </div>
+
+  <h3>依赖关系（必读）</h3>
+  <div class="card">
+    <div class="math">
+      <span class="eq">① 弧度制 → ② 六函数（角度一律用弧度表示）</span>
+      <span class="eq">② 六函数 → ③ 恒等式（倒数关系是恒等式的第一块砖）</span>
+      <span class="eq">③ 恒等式 → ④ 复角公式（推导 tan 公式时必须「分子分母同除 cos A cos B」）</span>
+      <span class="eq">④ 复角公式 → ⑤ 二倍角（把 B 换成 A）</span>
+      <span class="eq">⑤ 二倍角 + ④ → ⑥ 和积互化（把 sin(A+B) 与 sin(A−B) 相加/相减）</span>
+    </div>
+    <div class="warn"><span class="lbl">断链预警</span>如果你在 3.4 的证明题里卡住，90% 的原因不是复角公式没背熟，而是 3.3 的 <span class="math">1 + cot<sup>2</sup>θ = cosec<sup>2</sup>θ</span> 与「奇变偶不变」不熟练。请回看 3.3。</div>
+  </div>
+
+  <h3>教材页面结构模板（每节都一样）</h3>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>板块</th><th>作用</th><th>使用建议</th></tr></thead>
+      <tbody>
+        <tr><td><b>Quick Quiz</b>（部分节）</td><td>概念刚讲完的即时填空</td><td>遮住答案口算，1 分钟内完成</td></tr>
+        <tr><td><b>Class Activity</b> / <b>Inquiry</b></td><td>让学生自己「发现」公式（如 Class Activity 3.1–3.3）</td><td>务必亲手推一遍，公式才记得住</td></tr>
+        <tr><td><b>Example N</b> + <b>Instant Drill N</b></td><td>例题 → 同构即练，编号一一对应</td><td>看完例题立刻做配对 Drill，核对答案页 p.3.69+</td></tr>
+        <tr><td><b>Class Practice 3.x</b></td><td>节末综合（4–5 题）</td><td>作业前的「热身检验」</td></tr>
+        <tr><td><b>Exercise 3A–3F</b></td><td>三档难度分级练习</td><td>Level 1 全做；Level 2 挑做；Level 3 冲星</td></tr>
+        <tr><td><b>Formulae Station</b></td><td>该练习所需公式的速查框</td><td>闭卷做练习前，先默写此框</td></tr>
+        <tr><td><b>Chapter Summary</b>（p.3.58–59）</td><td>全章公式 + 6 个示范例</td><td><b>考前唯一必背页</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================= 3.1 ================= -->
+<section id="s31">
+  <div class="sec-head"><span class="no">3.1</span><h2>弧度制 Radian Measure</h2><span class="pg">pp. 3.2 – 3.7 ｜ Exercise 3A</span></div>
+
+  <div class="card">
+    <h4 style="margin-top:0">本节定位</h4>
+    <p>把「角度」从<b>人为规定的 360 等分</b>换成<b>几何自然量</b>——弧长与半径之比。之所以整章必须用弧度，是因为后面所有公式（尤其微分、积分与级数）都只在弧度制下成立。本节只有两个核心产出：<b>一个定义</b>（θ = ℓ/r）与<b>一条换算关系</b>（180° = π rad）。</p>
+  </div>
+
+  <h3>A · 弧度的定义</h3>
+  <p>圆心角 θ 所对的弧长为 ℓ、半径为 r。若<b>弧长恰好等于半径</b>（ℓ = r），则该圆心角的大小定义为 <b>1 弧度</b>（1 rad，也可写作 1<sup>c</sup>）。</p>
+  <div class="formula"><b>核心公式</b>
+    <span class="math">θ = <span class="f"><i>ℓ</i><b>r</b></span> rad</span>
+  </div>
+  <p>推导只用到初中知识「弧长与圆心角成正比」：</p>
+  <div class="formula"><span class="math">
+    <span class="f"><i>θ</i><b>1 rad</b></span> = <span class="f"><i>弧长 BC</i><b>弧长 AB</b></span> = <span class="f"><i>ℓ</i><b>r</b></span> ⟹ θ = <span class="f"><i>ℓ</i><b>r</b></span> rad
+  </span></div>
+  <div class="tip"><span class="lbl">关键理解</span>弧度是「长度 ÷ 长度」，是一个<b>纯数</b>（无量纲）。所以 sin θ、θ 本身可以相加、相乘，也能直接放进微积分公式；写成 sin θ 中的 θ 本质上没有单位。这就是为什么「1 rad 有时省略单位写作 θ = 1」。</div>
+
+  <h3>B · 度与弧度的换算</h3>
+  <p>取半圆：θ = 180°，弧长 ℓ = <span class="math"><span class="f"><i>1</i><b>2</b></span>(2πr) = πr</span>，代入 θ = ℓ/r 得 <span class="math">θ = π rad</span>。</p>
+  <div class="formula"><b>换算基准</b>
+    <span class="math">
+      <span class="eq">180° = π rad</span>
+      <span class="eq">1° = <span class="f"><i>π</i><b>180</b></span> rad ≈ 0.0175 rad　（度 → 弧度：× <span class="f"><i>π</i><b>180</b></span>）</span>
+      <span class="eq">1 rad = <span class="f"><i>180</i><b>π</b></span>° ≈ 57.3°　（弧度 → 度：× <span class="f"><i>180</i><b>π</b></span>）</span>
+    </span>
+  </div>
+
+  <h3>本节例题（含答案要点）</h3>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 1</span><span class="ex-title">度 → 弧度（p.3.4）</span><span class="badge lv1">Level 1</span><span class="pill">乘以 π/180</span></summary>
+    <div class="body">
+      <p>把 60°、90°、315° 化为弧度，答案以 π 表示。</p>
+      <div class="formula"><span class="math">
+        <span class="eq">60° = 60 × <span class="f"><i>π</i><b>180</b></span> = <span class="f"><i>π</i><b>3</b></span> rad</span>
+        <span class="eq">90° = 90 × <span class="f"><i>π</i><b>180</b></span> = <span class="f"><i>π</i><b>2</b></span> rad</span>
+        <span class="eq">315° = 315 × <span class="f"><i>π</i><b>180</b></span> = <span class="f"><i>7π</i><b>4</b></span> rad</span>
+      </span></div>
+      <p><b>套路</b>：度 → 弧度，唯一动作就是「× π/180」，然后<b>约分</b>。315 = 45 × 7，180 = 45 × 4，所以直接得 7π/4——先约分再乘 π 更快。</p>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 2</span><span class="ex-title">弧度 → 度（p.3.5）</span><span class="badge lv1">Level 1</span><span class="pill">乘以 180/π</span></summary>
+    <div class="body">
+      <p>把 <span class="math"><span class="f"><i>π</i><b>4</b></span> rad</span> 与 1.5 rad 化为度（必要时取 3 位有效数字）。</p>
+      <div class="formula"><span class="math">
+        <span class="eq"><span class="f"><i>π</i><b>4</b></span> rad = <span class="f"><i>π</i><b>4</b></span> × <span class="f"><i>180°</i><b>π</b></span> = 45°　（快法：直接把 π rad 换成 180°）</span>
+        <span class="eq">1.5 rad = 1.5 × <span class="f"><i>180°</i><b>π</b></span> ≈ 85.9°（3 位有效数字）</span>
+      </span></div>
+      <div class="note"><span class="lbl">两种写法</span>含 π 的答案用「替换法」最省事（π rad = 180°）；纯小数则必须保留 π 在分母并用计算器，注意<b>有效数字</b>要求（此章多为 3 sig. fig.）。</div>
+    </div>
+  </details>
+
+  <h3>必须内化的「弧度化」结果表</h3>
+  <div class="tablewrap">
+    <table class="mono">
+      <thead><tr><th>度</th><th>30°</th><th>45°</th><th>60°</th><th>90°</th><th>120°</th><th>135°</th><th>150°</th><th>180°</th><th>210°</th><th>225°</th><th>270°</th><th>300°</th><th>315°</th><th>330°</th><th>360°</th></tr></thead>
+      <tbody>
+        <tr><td><b>弧度</b></td>
+          <td>π/6</td><td>π/4</td><td>π/3</td><td>π/2</td><td>2π/3</td><td>3π/4</td><td>5π/6</td><td>π</td><td>7π/6</td><td>5π/4</td><td>3π/2</td><td>5π/3</td><td>7π/4</td><td>11π/6</td><td>2π</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tip"><span class="lbl">记忆法</span>先记 30°/45°/60° 为 π/6、π/4、π/3（分母 = 180 ÷ 度数），其余全部是它们的整数倍。判断象限时，π/2 ≈ 1.57、π ≈ 3.14、3π/2 ≈ 4.71，用小数估算最快。</div>
+
+  <h3>本节陷阱</h3>
+  <div class="warn"><span class="lbl">Do's and Don'ts</span>
+    <ul style="margin-bottom:0">
+      <li><b>扇形角度公式用弧长比直径</b>：θ = ℓ/r，其中 r 是<b>半径</b>不是直径。用直径算出的答案会小一半。</li>
+      <li><b>度与弧度混用</b>：写 <span class="math">sin 30</span> 与 <span class="math">sin 30°</span> 是完全不同的值；本章后半段一律用弧度，题目给度数时请先转换。</li>
+      <li><b>计算器未切 RAD 模式</b>：CASIO fx-50FH II 需按 SHIFT → MODE → 2（PROG/RAD 显示「R」）。3.2 节的计算器题型出错几乎都源于此。</li>
+      <li><b>漏写单位 rad / 漏写 °</b>：HKDSE 会因单位缺失扣分。</li>
+    </ul>
+  </div>
+
+  <h3>练习映射 · Exercise 3A（p.3.6–3.7，共 14 题）</h3>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>难度</th><th>题号</th><th>题型</th><th>要点</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge lv1">L1</span></td><td>1(a)–(d)</td><td>由图求 θ</td><td>直接 θ = ℓ/r，答案多为小数</td></tr>
+        <tr><td><span class="badge lv1">L1</span></td><td>2–4</td><td>度 → 弧度</td><td>含 36°、97.5°、237.5° 等非特殊角，考「约分」</td></tr>
+        <tr><td><span class="badge lv1">L1</span></td><td>5–6</td><td>弧度 → 度</td><td>π 型答案精确值；小数型取 3 sig. fig.</td></tr>
+        <tr><td><span class="badge lv1">L1</span></td><td>7–8</td><td>先换算再求函数值</td><td>例：π/6 rad = 30° ⇒ tan 30° = √3/3</td></tr>
+        <tr><td><span class="badge lv2">L2</span></td><td>9–10</td><td>平角拆分 / 多角拼合</td><td>直线 MON、POQ 补角 ⇒ 角度相加为 π</td></tr>
+        <tr><td><span class="badge lv2">L2</span></td><td>11–13</td><td>正多边形内／外角</td><td>内角和 π(n−2)，外角 2π/n</td></tr>
+        <tr><td><span class="badge lv3">L3</span></td><td>14</td><td>内心 (in-centre) 题</td><td>AM、BM、CM 为三条角平分线 ⇒ α、β、γ 各为相应内角之半 ⇒ 合计 = (A+B+C)/2 = π/2</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note"><span class="lbl">补充结论</span>正 n 边形：内角 = <span class="math"><span class="f"><i>(n−2)π</i><b>n</b></span></span>，外角 = <span class="math"><span class="f"><i>2π</i><b>n</b></span></span>。正三角形内角 π/3 外角 2π/3；正五边形内角 3π/5 外角 2π/5。三角形内角比 1:3:5 ⇒ 最大角 = <span class="math"><span class="f"><i>5</i><b>9</b></span> × π = <span class="f"><i>5π</i><b>9</b></span></span>。</div>
+</section>
+
+<!-- ================= 3.2 ================= -->
+<section id="s32">
+  <div class="sec-head"><span class="no">3.2</span><h2>六个三角函数 The Six Trigonometric Functions</h2><span class="pg">pp. 3.8 – 3.20 ｜ Exercise 3B</span></div>
+
+  <div class="card">
+    <h4 style="margin-top:0">本节定位</h4>
+    <p>把函数族从 3 个扩到 6 个：新增 <b>cosec（餘割）</b>、<b>sec（正割）</b>、<b>cot（餘切）</b>，它们分别是 sin、cos、tan 的<b>倒数</b>。这三个函数不是「多背三个公式」而已——它们是复角公式、二倍角公式证明题的<b>常客</b>，也是 DSE 长题变换的主要对象。本节还要解决两件事：象限符号判定（CAST）与含 cosec/sec/cot 的三角方程。</p>
+  </div>
+
+  <h3>A · 定义（任意角的六个比值）</h3>
+  <p>设 P(x, y) 为角 θ 终边上任一点，<span class="math">r = OP = √(x<sup>2</sup> + y<sup>2</sup>) &gt; 0</span>。</p>
+  <div class="tablewrap">
+    <table class="mono">
+      <thead><tr><th>函数</th><th>sin θ</th><th>cos θ</th><th>tan θ</th><th>cosec θ</th><th>sec θ</th><th>cot θ</th></tr></thead>
+      <tbody>
+        <tr><td><b>定义</b></td>
+          <td>y / r</td><td>x / r</td><td>y / x</td>
+          <td>r / y</td><td>r / x</td><td>x / y</td></tr>
+        <tr><td><b>限制</b></td>
+          <td>—</td><td>—</td><td>x ≠ 0</td>
+          <td>y ≠ 0（即 sin θ ≠ 0）</td><td>x ≠ 0（即 cos θ ≠ 0）</td><td>y ≠ 0（即 sin θ ≠ 0）</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="formula"><b>倒数关系（3.3 节将正式命名）</b>
+    <span class="math">cosec θ = <span class="f"><i>1</i><b>sin θ</b></span>　　sec θ = <span class="f"><i>1</i><b>cos θ</b></span>　　cot θ = <span class="f"><i>1</i><b>tan θ</b></span> = <span class="f"><i>cos θ</i><b>sin θ</b></span></span>
+  </div>
+  <div class="warn"><span class="lbl">Do's and Don'ts（教材 p.3.8 明示）</span>
+    <span class="math">sec θ ≠ <span class="f"><i>1</i><b>sin θ</b></span>　　cosec θ ≠ <span class="f"><i>1</i><b>cos θ</b></span></span><br>
+    最稳的记法：<b>cosec 是 sin 的倒数，sec 是 cos 的倒数，cot 是 tan 的倒数</b>；其中 sec 与 cos 只差一个首字母（s ↔ c），必须硬记，而 cosec 与 cos 的搭配没有字面线索 —— 「sec = 1/cos」是本卷最高频的低级错误来源。
+  </div>
+  <div class="note"><span class="lbl">术语</span>cosec 也写作 csc（部分教材／计算器）。六个函数统称 trigonometric functions（三角函数）；cosec θ、sec θ、cot θ 分别称为 cosecant / secant / cotangent function。</div>
+
+  <h3>B · 特殊角的取值（含 undefined）</h3>
+  <div class="tablewrap">
+    <table class="mono">
+      <thead><tr><th>θ</th><th>0</th><th>π/2</th><th>π</th><th>3π/2</th><th>2π</th></tr></thead>
+      <tbody>
+        <tr><td>sin θ</td><td class="c">0</td><td class="c">1</td><td class="c">0</td><td class="c">−1</td><td class="c">0</td></tr>
+        <tr><td>cosec θ</td><td class="c">未定义</td><td class="c">1</td><td class="c">未定义</td><td class="c">−1</td><td class="c">未定义</td></tr>
+        <tr><td>cos θ</td><td class="c">1</td><td class="c">0</td><td class="c">−1</td><td class="c">0</td><td class="c">1</td></tr>
+        <tr><td>sec θ</td><td class="c">1</td><td class="c">未定义</td><td class="c">−1</td><td class="c">未定义</td><td class="c">1</td></tr>
+        <tr><td>tan θ</td><td class="c">0</td><td class="c">未定义</td><td class="c">0</td><td class="c">未定义</td><td class="c">0</td></tr>
+        <tr><td>cot θ</td><td class="c">未定义</td><td class="c">0</td><td class="c">未定义</td><td class="c">0</td><td class="c">未定义</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tip"><span class="lbl">一句话记法</span>「<b>分母为零即未定义</b>」。sin π = 0 ⇒ cosec π 未定义；cos(π/2) = 0 ⇒ sec(π/2) 未定义；tan(π/2) 未定义 ⇒ cot(π/2) = 0（这也是唯一「tan 未定义但 cot 有值」的地方，常考）。</div>
+
+  <h3>C · 符号与 CAST 图</h3>
+  <div class="grid2">
+    <div class="tablewrap" style="margin:0">
+      <table class="mono">
+        <thead><tr><th>象限</th><th>正值的函数</th></tr></thead>
+        <tbody>
+          <tr><td>I</td><td>全部为正（<b>A</b>ll）</td></tr>
+          <tr><td>II</td><td>sin / cosec（<b>S</b>ine）</td></tr>
+          <tr><td>III</td><td>tan / cot（<b>T</b>angent）</td></tr>
+          <tr><td>IV</td><td>cos / sec（<b>C</b>osine）</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card tight" style="margin:0">
+      <p style="margin-top:0"><b>本质推导</b>：r &gt; 0 恒成立，符号完全由 <b>x、y 的符号</b>决定：</p>
+      <ul class="clean" style="margin-bottom:0">
+        <li>sin = y/r、cosec = r/y → 随 <b>y</b> 变号</li>
+        <li>cos = x/r、sec = r/x → 随 <b>x</b> 变号</li>
+        <li>tan = y/x、cot = x/y → 同号为正、异号为负</li>
+      </ul>
+    </div>
+  </div>
+  <div class="tip"><span class="lbl">进阶记法</span>CAST 图的字母按逆时针从第四象限开始读 C→A→S→T，对应「<b>C</b>os positive、<b>A</b>ll positive、<b>S</b>in positive、<b>T</b>an positive」。而 3.3 节的「奇变偶不变，符号看象限」中的「符号」就是查这张图。</div>
+
+  <h3>D · 用计算器求值（含倒数函数）</h3>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>需求</th><th>按键思路</th><th>例</th></tr></thead>
+      <tbody>
+        <tr><td>求 cosec / sec / cot 的值</td><td>先取倒数再算：<span class="math">1 ÷ sin</span>、<span class="math">1 ÷ cos</span>、<span class="math">1 ÷ tan</span></td><td>cosec(π/9) = 1 ÷ sin(π/9) ≈ 2.9238</td></tr>
+        <tr><td>由函数值求角</td><td>用 SHIFT sin / cos / tan（反三角函数）</td><td>sin θ = 0.8 ⇒ θ ≈ 0.9272 rad</td></tr>
+        <tr><td>已知 sec θ = 3 求角</td><td><b>先化成 cos θ = 1/3</b> 再取 SHIFT cos</td><td>θ ≈ 1.2309 rad</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="warn"><span class="lbl">必查</span>计算器屏幕必须显示 <span class="pill">R</span> 或 <span class="pill">RAD</span>。若显示 D（度），所有弧度题的答案都会错得离谱且无法察觉。</div>
+
+  <h3>E · 解含 cosec / sec / cot 的三角方程（两步法）</h3>
+  <div class="formula"><b>标准流程</b>
+    <span class="eq"><b>Step 1</b>　用倒数关系把方程化回 sin x / cos x / tan x</span>
+    <span class="eq"><b>Step 2</b>　求参考角 a，再按所求区间写出<b>全部</b>满足的 x</span>
+  </div>
+  <div class="note"><span class="lbl">参考角（reference angle）</span>：先解 <span class="math">sin a = |k|</span> 之类的锐角 a，再用 CAST 图把 a 投射到正确象限。例如 <span class="math">tan x = −1/√3</span>，a = 30°，tan 在 II、IV 为正？不——tan 在 II、IV 为<b>负</b>，故 x = 180° − 30° = 150° 或 360° − 30° = 330°。</div>
+
+  <h3>本节例题（拆解 + 答案要点）</h3>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 3</span><span class="ex-title">由坐标求六个函数值（p.3.9）</span><span class="badge lv1">L1</span></summary>
+    <div class="body">
+      <p>已知 P(−4, 3) 在 θ 终边上，求六个三角函数值。</p>
+      <div class="formula"><span class="math">
+        <span class="eq">r = √((−4)<sup>2</sup> + 3<sup>2</sup>) = 5</span>
+        <span class="eq">sin θ = 3/5　cos θ = −4/5　tan θ = −3/4</span>
+        <span class="eq">cosec θ = 5/3　sec θ = −5/4　cot θ = −4/3</span>
+      </span></div>
+      <p><b>套路</b>：三步固定 —— ① 算 r（必为正）；② 直写 sin/cos/tan；③ 逐个取倒数。注意 <span class="math">cot θ = 1/tan θ = x/y = −4/3</span>，与 tan 同号。</p>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 4</span><span class="ex-title">由符号判定象限（p.3.13）</span><span class="badge lv1">L1</span></summary>
+    <div class="body">
+      <p>(a) sec θ &lt; 0 且 cosec θ &lt; 0；(b) cosec θ &gt; 0 且 cot θ &lt; 0。</p>
+      <div class="formula"><span class="math">
+        <span class="eq">(a) sec&lt;0 ⇒ II 或 III；cosec&lt;0 ⇒ III 或 IV　⟹　θ 在 <b>第 III 象限</b></span>
+        <span class="eq">(b) cosec&gt;0 ⇒ I 或 II；cot&lt;0 ⇒ II 或 IV　⟹　θ 在 <b>第 II 象限</b></span>
+      </span></div>
+      <p><b>套路</b>：每个条件给出「两个候选象限」，取<b>交集</b>。若交集为空 ⇒ 该角不存在（Level 2 会出现这类「无解」判断题）。做题时建议在草稿纸上画出两个条件各自覆盖的扇区。</p>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 5</span><span class="ex-title">由一函数值求其余值（唯一象限）（p.3.13）</span><span class="badge lv1">L1</span></summary>
+    <div class="body">
+      <p>已知 <span class="math">cot θ = −√3</span>，且 π &lt; θ &lt; 2π，不用计算器求 sec θ 与 cosec θ。</p>
+      <div class="formula"><span class="math">
+        <span class="eq">cot θ &lt; 0 且 π &lt; θ &lt; 2π ⇒ θ 在<b>第 IV 象限</b></span>
+        <span class="eq">取 x = √3, y = −1 ⇒ r = √(3 + 1) = 2</span>
+        <span class="eq">sec θ = r/x = 2/√3 = <span class="f"><i>2√3</i><b>3</b></span>　　cosec θ = r/y = 2/(−1) = −2</span>
+      </span></div>
+      <div class="tip"><span class="lbl">为什么可以「自己选 x、y」</span>三角函数只依赖比值，所以在终边上任取一点都成立。选最简单的整数点（√3, −1）比硬算更方便。唯一约束是 <b>x、y 的符号必须符合所在象限</b>、且 <b>r 要算对</b>（r 一定为正）。</div>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 6</span><span class="ex-title">同一比值、两个象限 ⇒ 两组答案（p.3.14）</span><span class="badge lv2">L2</span></summary>
+    <div class="body">
+      <p>已知 <span class="math">sec θ = −5/3</span>，0 ≤ θ ≤ 2π，求 cosec θ 与 cot θ。</p>
+      <div class="formula"><span class="math">
+        <span class="eq">sec θ &lt; 0 ⇒ θ 在 II 或 III 象限 ⇒ <b>必须分两种情况</b></span>
+        <span class="eq">取 x = −3, r = 5 ⇒ y<sup>2</sup> = 25 − 9 = 16 ⇒ y = ±4</span>
+        <span class="eq">QII（y = 4）：cosec θ = 5/4，cot θ = −3/4</span>
+        <span class="eq">QIII（y = −4）：cosec θ = −5/4，cot θ = 3/4</span>
+      </span></div>
+      <div class="warn"><span class="lbl">评分点</span>「两组答案」是本节最典型的失分点：题目给的是 <span class="math">0 ≤ θ ≤ 2π</span> 这种「跨象限区间」时，<b>一定要写出两组</b>并分别说明象限；只写一组直接扣一半分。</div>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 7</span><span class="ex-title">解方程（度数，含多倍角）（p.3.15）</span><span class="badge lv1">L1</span></summary>
+    <div class="body">
+      <p>(a) <span class="math">cot x = −√3</span>；(b) <span class="math">sec 2x = √2</span>，其中 0° ≤ x ≤ 360°。</p>
+      <div class="formula"><span class="math">
+        <span class="eq">(a) tan x = −1/√3 ⇒ a = 30° ⇒ x = 180° − 30° = <b>150°</b> 或 360° − 30° = <b>330°</b></span>
+        <span class="eq">(b) 令 y = 2x，则 0° ≤ y ≤ 720°；cos y = √2/2 ⇒ y = 45°, 315°, 405°, 675°</span>
+        <span class="eq">⟹ x = <b>22.5°, 157.5°, 202.5°, 337.5°</b></span>
+      </span></div>
+      <p><b>套路</b>：遇到 <span class="math">2x、3x</span> 这类多倍角，<b>先整体换元 y = 2x</b>，把区间同步放大（×2），解完 y 再除回。漏掉区间放大 ⇒ 解漏一半。</p>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 8</span><span class="ex-title">解方程（弧度，含角的平移）（p.3.16）</span><span class="badge lv2">L2</span></summary>
+    <div class="body">
+      <p>解 <span class="math">cosec(x + π/3) = 2</span>，0 ≤ x ≤ π。</p>
+      <div class="formula"><span class="math">
+        <span class="eq">令 y = x + π/3；由 0 ≤ x ≤ π 得 π/3 ≤ y ≤ 4π/3</span>
+        <span class="eq">cosec y = 2 ⇒ sin y = 1/2 ⇒ y = π/6（<b>舍去</b>，不在区间）或 y = π − π/6 = 5π/6</span>
+        <span class="eq">x + π/3 = 5π/6 ⇒ <b>x = π/2</b></span>
+      </span></div>
+      <div class="warn"><span class="lbl">双重检验</span>（教材 p.3.16 明确提示）解出的 x 必须同时满足：① 落在题目给定区间内；② 代回原方程成立。含平移的题，参考角对应的「另一个解」常常落在区间外，必须显式写出「rejected」。</div>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 9</span><span class="ex-title">可化为二次方程（p.3.17）</span><span class="badge lv2">L2</span></summary>
+    <div class="body">
+      <p>解 <span class="math">3sec<sup>2</sup>x − 7sec x + 2 = 0</span>，0 ≤ x ≤ 2π。</p>
+      <div class="formula"><span class="math">
+        <span class="eq">(sec x − 2)(3 sec x − 1) = 0 ⇒ sec x = 2 或 sec x = 1/3</span>
+        <span class="eq">cos x = 1/2 或 cos x = 3（<b>舍去</b>，因 −1 ≤ cos x ≤ 1）</span>
+        <span class="eq">x = π/3 或 2π − π/3 = <b>5π/3</b></span>
+      </span></div>
+      <p><b>套路</b>：整体把 <span class="math">sec x</span> 当作一个字母 t 做因式分解，最后一定回到 cos（或 sin），并<b>用 −1 ≤ cos x ≤ 1 筛掉不可能的根</b>。这一步是 Level 2 的固定采分点。</p>
+    </div>
+  </details>
+
+  <h3>本节陷阱（高频失分点）</h3>
+  <div class="warn"><span class="lbl">Top 5</span>
+    <ol style="margin-bottom:0">
+      <li><b>sec θ 与 sin θ 混淆</b>：sec = 1/cos。写错后整题崩。</li>
+      <li><b>忘记分情况</b>：区间跨两个象限时只写一组答案（见例 6）。</li>
+      <li><b>没有筛根</b>：cos x = 3、sin x = −2 之类仍继续求解（见例 9）。</li>
+      <li><b>多倍角区间未放大</b>：2x 时仍用原区间，导致解集不全（见例 7）。</li>
+      <li><b>忽略未定义点</b>：把区间端点的 π/2、π 等直接代入 sec/cosec，未检查其是否有定义。</li>
+    </ol>
+  </div>
+
+  <h3>练习映射 · Exercise 3B（p.3.18–3.20，共 30 题）</h3>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>难度</th><th>题号</th><th>题型</th><th>对应例题</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge lv1">L1</span></td><td>1–4</td><td>由坐标点求六个函数值</td><td>例 3</td></tr>
+        <tr><td><span class="badge lv1">L1</span></td><td>5–6</td><td>求值（含计算器 3 sig. fig.）</td><td>—</td></tr>
+        <tr><td><span class="badge lv1">L1</span></td><td>7–10</td><td>符号判定象限</td><td>例 4</td></tr>
+        <tr><td><span class="badge lv1">L1</span></td><td>11–13</td><td>由一值求其余（唯一象限）</td><td>例 5</td></tr>
+        <tr><td><span class="badge lv1">L1</span></td><td>14–15</td><td>度数／弧度解方程</td><td>例 7</td></tr>
+        <tr><td><span class="badge lv2">L2</span></td><td>16–24</td><td>乘积符号、复合条件求值、<span class="math">sec<sup>2</sup>−tan<sup>2</sup></span> 型技巧</td><td>例 5、6</td></tr>
+        <tr><td><span class="badge lv2">L2</span></td><td>25–27</td><td>含平移 / 多倍角 / 二次型的方程</td><td>例 8、9</td></tr>
+        <tr><td><span class="badge lv3">L3</span></td><td>28–30</td><td>求最大值、周期代入、<span class="math">cos θ + sec θ = k</span> 的代数变形</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tip"><span class="lbl">Level 3 母题预告</span>第 30 题「<span class="math">cos θ + sec θ = k</span>，证明 <span class="math">cos θ − sec θ = −√(k<sup>2</sup> − 4)</span>」是 3.3 节平方恒等式的直接应用：<span class="math">(cos θ − sec θ)<sup>2</sup> = (cos θ + sec θ)<sup>2</sup> − 4</span>，符号由 θ 所在象限决定。这类「构造对偶式」的思想在后续章节反复出现。</div>
+</section>
+
+<!-- ================= 3.3 ================= -->
+<section id="s33">
+  <div class="sec-head"><span class="no">3.3</span><h2>三角恒等式 Trigonometric Identities</h2><span class="pg">pp. 3.20 – 3.30 ｜ Exercise 3C</span></div>
+
+  <div class="card">
+    <h4 style="margin-top:0">本节定位</h4>
+    <p>本节是全章的「代数工具箱」：把六函数之间的**恒等关系**系统化，并提供一整套<b>诱导公式</b>（把任意角化简为锐角）。它本身考的不多，但 3.4–3.6 所有证明题的第一步几乎都是「化简」。学不好这一节，后面只能背答案。</p>
+  </div>
+
+  <h3>A · 三类基本恒等式</h3>
+  <div class="formula"><b>① 倒数恒等式</b>
+    <span class="math">cosec θ = <span class="f"><i>1</i><b>sin θ</b></span>　sec θ = <span class="f"><i>1</i><b>cos θ</b></span>　cot θ = <span class="f"><i>1</i><b>tan θ</b></span></span>
+  </div>
+  <div class="formula"><b>② 商数恒等式</b>
+    <span class="math">
+      <span class="eq">tan θ = <span class="f"><i>y</i><b>x</b></span> = <span class="f"><i>y/r</i><b>x/r</b></span> = <span class="f"><i>sin θ</i><b>cos θ</b></span>　（要求 cos θ ≠ 0）</span>
+      <span class="eq">cot θ = <span class="f"><i>x</i><b>y</b></span> = <span class="f"><i>cos θ</i><b>sin θ</b></span>　（要求 sin θ ≠ 0）</span>
+    </span>
+  </div>
+  <div class="formula"><b>③ 平方（毕氏）恒等式</b>
+    <span class="eq"><span class="math">sin<sup>2</sup>θ + cos<sup>2</sup>θ = 1</span>　　<span class="pill">由 r<sup>2</sup> = x<sup>2</sup> + y<sup>2</sup> 两边除以 r<sup>2</sup></span></span>
+    <span class="eq"><span class="math">1 + tan<sup>2</sup>θ = sec<sup>2</sup>θ</span>　　<span class="pill">上式两边除以 cos<sup>2</sup>θ</span></span>
+    <span class="eq"><span class="math">1 + cot<sup>2</sup>θ = cosec<sup>2</sup>θ</span>　　<span class="pill">上式两边除以 sin<sup>2</sup>θ</span></span>
+  </div>
+  <div class="warn"><span class="lbl">成立条件（教材 p.3.21 标注）</span><span class="math">1 + tan<sup>2</sup>θ = sec<sup>2</sup>θ</span> 只在 tan θ 与 sec θ <b>均有定义</b>时成立（cos θ ≠ 0）；<span class="math">1 + cot<sup>2</sup>θ = cosec<sup>2</sup>θ</span> 只在 sin θ ≠ 0 时成立。证明题中若出现 θ = π/2 之类的点，理论上要排除——DSE 一般不追究，但概念题会考。</div>
+
+  <h3>B · 诱导公式总表：n·90° ± θ 与 nπ/2 ± θ</h3>
+  <p>教材把结果整理成两张表（p.3.24），这是<b>必须能默写</b>的部分：</p>
+
+  <div class="tablewrap">
+    <table class="mono">
+      <thead><tr><th>函数</th><th>−θ</th><th>180°−θ（π−θ）</th><th>180°+θ（π+θ）</th><th>360°−θ（2π−θ）</th><th>360°+θ（2π+θ）</th></tr></thead>
+      <tbody>
+        <tr><td>sin</td><td>−sin θ</td><td>sin θ</td><td>−sin θ</td><td>−sin θ</td><td>sin θ</td></tr>
+        <tr><td>cosec</td><td>−cosec θ</td><td>cosec θ</td><td>−cosec θ</td><td>−cosec θ</td><td>cosec θ</td></tr>
+        <tr><td>cos</td><td>cos θ</td><td>−cos θ</td><td>−cos θ</td><td>cos θ</td><td>cos θ</td></tr>
+        <tr><td>sec</td><td>sec θ</td><td>−sec θ</td><td>−sec θ</td><td>sec θ</td><td>sec θ</td></tr>
+        <tr><td>tan</td><td>−tan θ</td><td>−tan θ</td><td>tan θ</td><td>−tan θ</td><td>tan θ</td></tr>
+        <tr><td>cot</td><td>−cot θ</td><td>−cot θ</td><td>cot θ</td><td>−cot θ</td><td>cot θ</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tablewrap">
+    <table class="mono">
+      <thead><tr><th>函数</th><th>90°−θ（π/2−θ）</th><th>90°+θ（π/2+θ）</th><th>270°−θ（3π/2−θ）</th><th>270°+θ（3π/2+θ）</th></tr></thead>
+      <tbody>
+        <tr><td>sin</td><td>cos θ</td><td>cos θ</td><td>−cos θ</td><td>−cos θ</td></tr>
+        <tr><td>cosec</td><td>sec θ</td><td>sec θ</td><td>−sec θ</td><td>−sec θ</td></tr>
+        <tr><td>cos</td><td>sin θ</td><td>−sin θ</td><td>−sin θ</td><td>sin θ</td></tr>
+        <tr><td>sec</td><td>cosec θ</td><td>−cosec θ</td><td>−cosec θ</td><td>cosec θ</td></tr>
+        <tr><td>tan</td><td>cot θ</td><td>−cot θ</td><td>cot θ</td><td>−cot θ</td></tr>
+        <tr><td>cot</td><td>tan θ</td><td>−tan θ</td><td>tan θ</td><td>−tan θ</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tip"><span class="lbl">不需要背 48 条！用两句口诀现推</span>
+    <ul style="margin-bottom:0">
+      <li><b>奇变偶不变</b>：π/2 的<b>奇数</b>倍（90°、270°）→ 函数名换成余函数（sin↔cos，tan↔cot，sec↔cosec）；π/2 的<b>偶数</b>倍（180°、360°）→ 函数名不变。</li>
+      <li><b>符号看象限</b>：把 θ 当成锐角，判断<b>原函数</b>在「原式那个角所在象限」的正负，即为结果符号。</li>
+    </ul>
+    例：<span class="math">cos(3π/2 − θ)</span> → 3π/2 是奇数倍 π/2 ⇒ 变名成 sin；把 θ 当锐角，3π/2 − θ 在第三象限，cos 在第三象限为负 ⇒ 结果 <span class="math">= −sin θ</span>。✔
+  </div>
+  <div class="note"><span class="lbl">倒数函数怎么办</span>（教材 p.3.24 的 e.g.）先写成倒数再套：<span class="math">cosec(π/2 − θ) = 1 / sin(π/2 − θ) = 1/cos θ = sec θ</span>。另外要牢记「<b>平方后符号一律变正</b>」：<span class="math">cosec<sup>2</sup>(π + θ) = (−cosec θ)<sup>2</sup> = cosec<sup>2</sup>θ</span>，这是方程题（例 15）的关键一步。</div>
+
+  <h3>本节例题（拆解 + 答案要点）</h3>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 10</span><span class="ex-title">化简：全部拆成 sin / cos（p.3.22）</span><span class="badge lv1">L1</span></summary>
+    <div class="body">
+      <p>化简 <span class="math">cot θ · cosec θ · sec θ</span></p>
+      <div class="formula"><span class="math">
+        <span class="eq">= <span class="f"><i>cos θ</i><b>sin θ</b></span> · <span class="f"><i>1</i><b>sin θ</b></span> · <span class="f"><i>1</i><b>cos θ</b></span> = <span class="f"><i>1</i><b>sin<sup>2</sup>θ</b></span> = cosec<sup>2</sup>θ</span>
+      </span></div>
+      <p><b>万能第一步</b>：所有函数<b>拆成 sin θ 与 cos θ</b>。本章 80% 的化简与证明都从这一步开始，剩下的是约分。cos θ 与 cos θ 对消、sin θ × sin θ 得 sin²θ，一步到位。</p>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 11</span><span class="ex-title">用平方恒等式（不用计算器）（p.3.22）</span><span class="badge lv1">L1</span></summary>
+    <div class="body">
+      <p>已知 <span class="math">cot θ = −4/3</span>，π/2 &lt; θ &lt; π，求 (a) tan θ；(b) sec θ。</p>
+      <div class="formula"><span class="math">
+        <span class="eq">(a) tan θ = <span class="f"><i>1</i><b>cot θ</b></span> = <span class="f"><i>1</i><b>−4/3</b></span> = −<span class="f"><i>3</i><b>4</b></span></span>
+        <span class="eq">(b) sec<sup>2</sup>θ = 1 + tan<sup>2</sup>θ = 1 + <span class="f"><i>9</i><b>16</b></span> = <span class="f"><i>25</i><b>16</b></span> ⇒ sec θ = ±<span class="f"><i>5</i><b>4</b></span></span>
+        <span class="eq">θ 在第 II 象限 ⇒ cos θ &lt; 0 ⇒ sec θ &lt; 0 ⇒ <b>sec θ = −5/4</b></span>
+      </span></div>
+      <p><b>套路</b>：与「求值」类题不同，这里<b>不需要求 r</b>，直接用 <span class="math">1 + tan<sup>2</sup> = sec<sup>2</sup></span> 更快。但开方后<b>必须用象限定号</b>——这是唯一可能错的地方。</p>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 12</span><span class="ex-title">证明恒等式：把常数 1 换成 cosec²−cot²（p.3.23）</span><span class="badge lv2">L2</span></summary>
+    <div class="body">
+      <p>证明 <span class="math"><span class="f"><i>cot θ + cosec θ − 1</i><b>1 − cosec θ + cot θ</b></span> = cot θ + cosec θ</span></p>
+      <div class="formula"><span class="math">
+        <span class="eq">L.H.S. = <span class="f"><i>cot θ + cosec θ − 1</i><b>1 − cosec θ + cot θ</b></span></span>
+        <span class="eq">= <span class="f"><i>cot θ + cosec θ − (cosec<sup>2</sup>θ − cot<sup>2</sup>θ)</i><b>1 − cosec θ + cot θ</b></span>　<span class="pill">用 1 = cosec²θ − cot²θ</span></span>
+        <span class="eq">= <span class="f"><i>cot θ + cosec θ − (cosec θ + cot θ)(cosec θ − cot θ)</i><b>1 − cosec θ + cot θ</b></span></span>
+        <span class="eq">= <span class="f"><i>(cot θ + cosec θ)[1 − (cosec θ − cot θ)]</i><b>1 − cosec θ + cot θ</b></span> = <span class="f"><i>(cot θ + cosec θ)(1 − cosec θ + cot θ)</i><b>1 − cosec θ + cot θ</b></span></span>
+        <span class="eq">= cot θ + cosec θ = R.H.S. ∎</span>
+      </span></div>
+      <div class="tip"><span class="lbl">两个核心技巧</span>① <b>把常数 1 替换成平方差</b>（1 = cosec²θ − cot²θ，或 1 = sec²θ − tan²θ），再因式分解；② 分母 <span class="math">1 − cosec θ + cot θ</span> 与分子中的因式<b>完全一样</b>，所以一定能约掉——这是命题人故意留的「暗号」。</div>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 13</span><span class="ex-title">用诱导公式求特殊角的函数值（p.3.25）</span><span class="badge lv1">L1</span></summary>
+    <div class="body">
+      <p>(a) sec 240°；(b) sin(2π/3)；(c) cot(11π/6)</p>
+      <div class="formula"><span class="math">
+        <span class="eq">(a) sec 240° = sec(180° + 60°) = −sec 60° = −<span class="f"><i>1</i><b>cos 60°</b></span> = −2</span>
+        <span class="eq">(b) sin <span class="f"><i>2π</i><b>3</b></span> = sin(π − <span class="f"><i>π</i><b>3</b></span>) = sin <span class="f"><i>π</i><b>3</b></span> = <span class="f"><i>√3</i><b>2</b></span></span>
+        <span class="eq">(c) cot <span class="f"><i>11π</i><b>6</b></span> = cot(2π − <span class="f"><i>π</i><b>6</b></span>) = −cot <span class="f"><i>π</i><b>6</b></span> = −<span class="f"><i>1</i><b>tan(π/6)</b></span> = −√3</span>
+      </span></div>
+      <p><b>标准动作</b>：① 拆成「特殊角 ± 某角」；② 套诱导公式；③ 若结果是倒数函数（sec/cot/cosec），转成 1/cos 等再取特殊值表。</p>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 14</span><span class="ex-title">多步化简：诱导公式 + 平方恒等式（p.3.26）</span><span class="badge lv2">L2</span></summary>
+    <div class="body">
+      <p>化简 <span class="math"><span class="f"><i>1 − cosec(3π/2 − θ) · sec(π − θ)</i><b>[1 − cosec(−θ)] [cosec(π + θ) + 1]</b></span></span></p>
+      <div class="formula"><span class="math">
+        <span class="eq">cosec(3π/2 − θ) = −sec θ　　sec(π − θ) = −sec θ　　cosec(−θ) = −cosec θ　　cosec(π + θ) = −cosec θ</span>
+        <span class="eq">原式 = <span class="f"><i>1 − (−sec θ)(−sec θ)</i><b>(1 + cosec θ)(−cosec θ + 1)</b></span> = <span class="f"><i>1 − sec<sup>2</sup>θ</i><b>1 − cosec<sup>2</sup>θ</b></span></span>
+        <span class="eq">= <span class="f"><i>−tan<sup>2</sup>θ</i><b>−cot<sup>2</sup>θ</b></span> = <span class="f"><i>tan<sup>2</sup>θ</i><b>1/tan<sup>2</sup>θ</b></span> = <b>tan<sup>4</sup>θ</b></span>
+      </span></div>
+      <div class="note"><span class="lbl">易错</span>第一步把四个角全部化简时，负号最容易错：<span class="math">sec(π − θ) = −sec θ</span>（不是 +sec θ）。建议每个角单独写一行，最后统一代入，不要心算。</div>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 15</span><span class="ex-title">先证明再解方程（p.3.26–27）</span><span class="badge lv2">L2</span></summary>
+    <div class="body">
+      <p>(a) 证明 <span class="math">cosec<sup>2</sup>(θ − π)[1 + sin(3π/2 + θ)] = <span class="f"><i>1</i><b>1 + cos θ</b></span></span>；(b) 解该式 = 2/3（0 ≤ θ ≤ 2π）。</p>
+      <div class="formula"><span class="math">
+        <span class="eq">cosec<sup>2</sup>(θ − π) = cosec<sup>2</sup>[2π + (θ − π)] = cosec<sup>2</sup>(π + θ) = (−cosec θ)<sup>2</sup> = cosec<sup>2</sup>θ</span>
+        <span class="eq">sin(3π/2 + θ) = −cos θ</span>
+        <span class="eq">L.H.S. = cosec<sup>2</sup>θ (1 − cos θ) = <span class="f"><i>1 − cos θ</i><b>sin<sup>2</sup>θ</b></span> = <span class="f"><i>1 − cos θ</i><b>1 − cos<sup>2</sup>θ</b></span> = <span class="f"><i>1</i><b>1 + cos θ</b></span> = R.H.S.</span>
+        <span class="eq">(b) <span class="f"><i>1</i><b>1 + cos θ</b></span> = <span class="f"><i>2</i><b>3</b></span> ⇒ 3 = 2 + 2cos θ ⇒ cos θ = <span class="f"><i>1</i><b>2</b></span> ⇒ <b>θ = π/3 或 5π/3</b></span>
+      </span></div>
+      <div class="tip"><span class="lbl">「先证明后求解」题型</span>是 DSE 的标志性结构（本册 9 套真题中 6 套如此）。(a) 问的结论就是 (b) 问的超强提示：<b>(b) 必须直接使用 (a) 的等式</b>，否则既浪费时间又拿不到过程分。</div>
+    </div>
+  </details>
+
+  <h3>本节陷阱</h3>
+  <div class="warn"><span class="lbl">Do's and Don'ts</span>
+    <ul style="margin-bottom:0">
+      <li><b>只背 sin/cos/tan 的诱导公式</b>：sec、cosec、cot 的诱导公式要会用「先取倒数」现场推，直接背表极易记反。</li>
+      <li><b>平方后仍带负号</b>：<span class="math">cosec<sup>2</sup>(π + θ)</span> 是正的，写成 −cosec²θ 全题作废。</li>
+      <li><b>证明时两边同时变形</b>：规范写法是 L.H.S. → R.H.S.，中间禁止出现「= 原式」的循环论证。</li>
+      <li><b>通分漏项</b>：三项以上的分式加减，先找公分母再动笔，不要跳步。</li>
+      <li><b>把常数 1 当死数</b>：遇到「有 1 又有 cosec/cot」的结构，先试把 1 换成 <span class="math">cosec<sup>2</sup>θ − cot<sup>2</sup>θ</span>（例 12 的核心）。</li>
+    </ul>
+  </div>
+
+  <h3>练习映射 · Exercise 3C（p.3.28–3.30，共 30 题）</h3>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>难度</th><th>题号</th><th>题型</th><th>对应例题</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge lv1">L1</span></td><td>1–6</td><td>化简（乘除组合）</td><td>例 10</td></tr>
+        <tr><td><span class="badge lv1">L1</span></td><td>7–8</td><td>由一值求其余（用平方恒等式）</td><td>例 11</td></tr>
+        <tr><td><span class="badge lv1">L1</span></td><td>12</td><td>求特殊角函数值</td><td>例 13</td></tr>
+        <tr><td><span class="badge lv2">L2</span></td><td>16–17</td><td>证明恒等式（通分型）</td><td>例 12</td></tr>
+        <tr><td><span class="badge lv2">L2</span></td><td>22–23</td><td>化简（诱导公式多重嵌套）</td><td>例 14</td></tr>
+        <tr><td><span class="badge lv2">L2</span></td><td>24–27</td><td>先证明、再解方程</td><td>例 15</td></tr>
+        <tr><td><span class="badge lv3">L3</span></td><td>29–30</td><td><span class="math">tan<sup>2</sup>/sec/cot</span> 复合结构、绝对值与极值</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================= 3.4 ================= -->
+<section id="s34">
+  <div class="sec-head"><span class="no">3.4</span><h2>复角公式 Compound Angle Formulae</h2><span class="pg">pp. 3.31 – 3.39 ｜ Exercise 3D</span></div>
+
+  <div class="card">
+    <h4 style="margin-top:0">本节定位</h4>
+    <p><b>全章的心脏</b>。它回答一个初中一直默认却没证明的问题：<span class="math">sin(A + B)</span> 究竟等于什么？六条公式（sin、cos、tan 各两条）后续被 3.5、3.6 反复调用，也是 DSE M2 长题最高频的起点。本节 9 页、5 个例题、Exercise 3D 32 题，投入产出比最高。</p>
+  </div>
+
+  <h3>A · 六条复角公式（必背）</h3>
+  <div class="formula"><b>(1) (2) 正弦</b>
+    <span class="eq"><span class="math">sin(A + B) = sin A cos B + cos A sin B</span></span>
+    <span class="eq"><span class="math">sin(A − B) = sin A cos B − cos A sin B</span></span>
+  </div>
+  <div class="formula"><b>(3) (4) 余弦</b>
+    <span class="eq"><span class="math">cos(A + B) = cos A cos B − sin A sin B</span></span>
+    <span class="eq"><span class="math">cos(A − B) = cos A cos B + sin A sin B</span></span>
+  </div>
+  <div class="formula"><b>(5) (6) 正切</b>
+    <span class="eq"><span class="math">tan(A + B) = <span class="f"><i>tan A + tan B</i><b>1 − tan A tan B</b></span></span></span>
+    <span class="eq"><span class="math">tan(A − B) = <span class="f"><i>tan A − tan B</i><b>1 + tan A tan B</b></span></span></span>
+  </div>
+  <div class="warn"><span class="lbl">Do's and Don'ts（教材 p.3.31–32 逐条标注）</span>
+    <span class="math">sin(A + B) ≠ sin A + sin B　　sin(A − B) ≠ sin A − sin B</span><br>
+    <span class="math">cos(A + B) ≠ cos A + cos B　　cos(A − B) ≠ cos A − cos B</span><br>
+    <span class="math">tan(A + B) ≠ tan A + tan B　　tan(A − B) ≠ tan A − tan B</span><br>
+    这六条「假公式」是本章第一大错误来源。特别注意 <b>cos 的符号是反的</b>（和 → 减，差 → 加），tan 的分母也是反的。口诀：<b>「正弦同号，余弦反号，正切分母再反一次」</b>。
+  </div>
+
+  <h3>B · 推导链（理解后就不必硬背）</h3>
+  <div class="card">
+    <div class="math">
+      <span class="eq"><b>起点</b>　Class Activity 3.1：用三角形面积 <span class="math"><span class="f"><i>1</i><b>2</b></span>ab sin θ</span> 的<b>剖分相等</b>验证 <span class="math">sin(A + B) = sin A cos B + cos A sin B</span>（仅对锐角 A、B）</span>
+      <span class="eq"><b>第 1 步</b>　B → −B：（1）⇒ <b>公式 (2)</b>（用 cos(−B) = cos B、sin(−B) = −sin B）</span>
+      <span class="eq"><b>第 2 步</b>　A → π/2 − A：（2）⇒ <b>公式 (3)</b>（用 sin(π/2 − A) = cos A、cos(π/2 − A) = sin A）</span>
+      <span class="eq"><b>第 3 步</b>　B → −B：（3）⇒ <b>公式 (4)</b></span>
+      <span class="eq"><b>第 4 步</b>　tan = sin/cos，分子分母同除 cos A cos B：（1）(3) ⇒ <b>公式 (5)</b></span>
+      <span class="eq"><b>第 5 步</b>　B → −B：（5）⇒ <b>公式 (6)</b></span>
+    </div>
+    <div class="tip"><span class="lbl">为什么第 2 步可行</span>因为公式 (1)(2) 对<b>任意角</b>成立（教材特别说明），所以可以把 A 换成任何表达式，包括 π/2 − A。这种「用已知公式生成新公式」的手法在 3.5 会再次出现（令 B = A 得二倍角）。</div>
+  </div>
+
+  <h3>本节例题（拆解 + 答案要点）</h3>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 16</span><span class="ex-title">不用计算器求特殊角（p.3.33）</span><span class="badge lv1">L1</span></summary>
+    <div class="body">
+      <p>(a) sin 15°；(b) cos(7π/12)</p>
+      <div class="formula"><span class="math">
+        <span class="eq">(a) sin 15° = sin(45° − 30°) = sin 45°cos 30° − cos 45°sin 30° = <span class="f"><i>√2</i><b>2</b></span>·<span class="f"><i>√3</i><b>2</b></span> − <span class="f"><i>√2</i><b>2</b></span>·<span class="f"><i>1</i><b>2</b></span> = <span class="f"><i>√6 − √2</i><b>4</b></span></span>
+        <span class="eq">　 另解：sin 15° = sin(60° − 45°)，答案相同（可作为自我检查）</span>
+        <span class="eq">(b) cos <span class="f"><i>7π</i><b>12</b></span> = cos(<span class="f"><i>π</i><b>4</b></span> + <span class="f"><i>π</i><b>3</b></span>) = cos<span class="f"><i>π</i><b>4</b></span>cos<span class="f"><i>π</i><b>3</b></span> − sin<span class="f"><i>π</i><b>4</b></span>sin<span class="f"><i>π</i><b>3</b></span> = <span class="f"><i>√2 − √6</i><b>4</b></span></span>
+        <span class="eq">　 另解：cos<span class="f"><i>7π</i><b>12</b></span> = cos(<span class="f"><i>π</i><b>2</b></span> + <span class="f"><i>π</i><b>12</b></span>) = −sin<span class="f"><i>π</i><b>12</b></span> = −sin 15°（用诱导公式 + (a) 的结果）</span>
+      </span></div>
+      <p><b>拆角原则</b>：把非特殊角拆成<b>两个特殊角的和或差</b>。15° = 45°−30° = 60°−45°；7π/12 = 105° = 45°+60° = 90°+15°。优先选<b>含 30°/45°/60°</b> 的拆法，算式最短。</p>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 17</span><span class="ex-title">由 tan(A+B) 反求 tan A（p.3.34）</span><span class="badge lv1">L1</span></summary>
+    <div class="body">
+      <p>已知 <span class="math">tan(A + B) = 5/14</span>、<span class="math">tan B = −1/4</span>，求 tan A。</p>
+      <div class="formula"><span class="math">
+        <span class="eq"><b>解法一（解方程）</b>　<span class="f"><i>5</i><b>14</b></span> = <span class="f"><i>tan A + (−1/4)</i><b>1 − tan A·(−1/4)</b></span> ⇒ 5 + <span class="f"><i>5</i><b>4</b></span>tan A = 14 tan A − <span class="f"><i>7</i><b>2</b></span> ⇒ <span class="f"><i>51</i><b>4</b></span>tan A = <span class="f"><i>17</i><b>2</b></span> ⇒ <b>tan A = 2/3</b></span>
+        <span class="eq"><b>解法二（拆角）</b>　tan A = tan[(A + B) − B] = <span class="f"><i>tan(A+B) − tan B</i><b>1 + tan(A+B)tan B</b></span> = <span class="f"><i>5/14 + 1/4</i><b>1 − 5/56</b></span> = <b>2/3</b></span>
+      </span></div>
+      <div class="tip"><span class="lbl">解法二更快且更安全</span>：把要求的角写成「已知角 − 已知角」，直接套公式，避免解一次方程。这类「<b>配凑角</b>」的技巧（如 A = (A+B) − B）在 DSE 长题里非常常见。</div>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 18</span><span class="ex-title">通分化简成 cosec/sec（p.3.34）</span><span class="badge lv2">L2</span></summary>
+    <div class="body">
+      <p>化简 <span class="math"><span class="f"><i>sin(A + B)</i><b>sin A sin B</b></span> − <span class="f"><i>cos(A + B)</i><b>sin A cos B</b></span></span></p>
+      <div class="formula"><span class="math">
+        <span class="eq">= <span class="f"><i>sin(A + B)cos B − cos(A + B)sin B</i><b>sin A sin B cos B</b></span>　<span class="pill">通分，公分母 sin A sin B cos B</span></span>
+        <span class="eq">= <span class="f"><i>sin[(A + B) − B]</i><b>sin A sin B cos B</b></span> = <span class="f"><i>sin A</i><b>sin A sin B cos B</b></span> = <span class="f"><i>1</i><b>sin B cos B</b></span> = <b>cosec B sec B</b></span>
+      </span></div>
+      <div class="note"><span class="lbl">识别信号</span>分子出现「sin X cos Y − cos X sin Y」这种<b>交叉结构</b>时，一定是 sin(X − Y) 的展开（此处 X = A+B，Y = B）。看到「sin·cos ± cos·sin」就想 sin 公式，看到「cos·cos ∓ sin·sin」就想 cos 公式。</div>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 19</span><span class="ex-title">cot(α−β) 的公式 + 数值代入（p.3.35）</span><span class="badge lv2">L2</span></summary>
+    <div class="body">
+      <p>(a) 证明 <span class="math">cot(α − β) = <span class="f"><i>1 + cot α cot β</i><b>cot β − cot α</b></span></span>；(b) 据此求 <span class="math"><span class="f"><i>cot(π/12) + 1</i><b>cot(π/12) − 1</b></span></span> 的值。</p>
+      <div class="formula"><span class="math">
+        <span class="eq">(a) L.H.S. = <span class="f"><i>1</i><b>tan(α − β)</b></span> = <span class="f"><i>1 + tan α tan β</i><b>tan α − tan β</b></span> = <span class="f"><i>cot α cot β + 1</i><b>cot β − cot α</b></span>　<span class="pill">分子分母同乘 cot α cot β</span></span>
+        <span class="eq">(b) 取 α = π/4（cot α = 1）、β = π/12 ⇒ α − β = π/6</span>
+        <span class="eq">　 cot <span class="f"><i>π</i><b>6</b></span> = √3 = <span class="f"><i>cot(π/12) + 1</i><b>cot(π/12) − 1</b></span> ⇒ 所求值 = <b>√3</b></span>
+      </span></div>
+      <div class="tip"><span class="lbl">「先证后用」的结构</span>(a) 建立了一个<b>新公式</b>，(b) 要求在给定的数中找到「谁是 α、谁是 β」——这需要把 <span class="math">(cot X + 1)/(cot X − 1)</span> 与 <span class="math">(cot α cot β + 1)/(cot β − cot α)</span> <b>逐项比对</b>，识别出 cot β = cot(π/12)、cot α = 1 即 α = π/4。</div>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 20</span><span class="ex-title">条件恒等式 + 方程（DSE 风格）（p.3.36）</span><span class="badge lv2">L2</span> <span class="badge lv3">★ 公开试题衍生</span></summary>
+    <div class="body">
+      <p>(a) 若 <span class="math">3 tan A = tan B</span>，证明 <span class="math">sin(A + B) = 2 sin(B − A)</span>；(b) 据此解 <span class="math">3 tan(x + π/2) = tan(x + π/3)</span>，0 ≤ x ≤ π/2。</p>
+      <div class="formula"><span class="math">
+        <span class="eq">(a) 3 tan A = tan B ⇒ 3 <span class="f"><i>sin A</i><b>cos A</b></span> = <span class="f"><i>sin B</i><b>cos B</b></span> ⇒ <b>3 sin A cos B = cos A sin B</b></span>
+        <span class="eq">L.H.S. = sin(A + B) = sin A cos B + cos A sin B = sin A cos B + 3 sin A cos B = <b>4 sin A cos B</b></span>
+        <span class="eq">R.H.S. = 2 sin(B − A) = 2(sin B cos A − cos B sin A) = 2(3 sin A cos B) − 2 sin A cos B = <b>4 sin A cos B</b> = L.H.S.</span>
+        <span class="eq">(b) 取 A = x + π/2、B = x + π/3，则 A + B = 2x + 5π/6，B − A = −π/6</span>
+        <span class="eq">　 ⇒ sin(2x + 5π/6) = 2 sin(−π/6) = −1</span>
+        <span class="eq">　 0 ≤ x ≤ π/2 ⇒ 5π/6 ≤ 2x + 5π/6 ≤ 11π/6 ⇒ 仅 3π/2 落在区间内</span>
+        <span class="eq">　 ⇒ 2x + 5π/6 = 3π/2 ⇒ <b>x = π/3</b></span>
+      </span></div>
+      <div class="warn"><span class="lbl">三个易错处</span>① (a) 中必须<b>从「条件」出发</b>把 tan 化为 sin/cos 并交叉相乘；② (b) 中 <span class="math">B − A = (x + π/3) − (x + π/2) = −π/6</span>，符号不能写反；③ 换元后<b>区间要跟着变</b>（此处 2x + 5π/6 的范围），并显式舍去落在区间外的解。</div>
+    </div>
+  </details>
+
+  <h3>本节陷阱</h3>
+  <div class="warn"><span class="lbl">Do's and Don'ts</span>
+    <ul style="margin-bottom:0">
+      <li><b>把 cos(A−B) 写成 cos A cos B − sin A sin B</b>：差角的余弦是<b>加号</b>。这是整章最常考的「记忆反转」。</li>
+      <li><b>tan(A±B) 分母符号反</b>：加号配减、减号配加。</li>
+      <li><b>sin 2A 写成 sin(A+A) 后算成 2 sin A</b>：必须走公式。</li>
+      <li><b>拆角时拆错</b>：如 cos 75° = cos(45°+30°)，不是 cos(45°) + cos(30°)。</li>
+      <li><b>忘记复合函数的倒数形式</b>：遇 <span class="math">cosec(A+B)</span>、<span class="math">cot(A+B)</span>，先转成 <span class="math">1/sin</span>、<span class="math">1/tan</span>（教材 p.3.35 明确要求）。</li>
+    </ul>
+  </div>
+
+  <h3>练习映射 · Exercise 3D（p.3.37–3.39，共 32 题）</h3>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>难度</th><th>题号</th><th>题型</th><th>对应例题</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge lv1">L1</span></td><td>1–3</td><td>不用计算器求值（cos 105°、sin 165°、tan 15° 等）</td><td>例 16</td></tr>
+        <tr><td><span class="badge lv1">L1</span></td><td>4–5</td><td>化简（形如 sin A cos 2A + cos A sin 2A）</td><td>例 18</td></tr>
+        <tr><td><span class="badge lv1">L1</span></td><td>6–9</td><td>求值（拆成两个角的差）</td><td>例 16</td></tr>
+        <tr><td><span class="badge lv1">L1</span></td><td>17–18</td><td>配凑角求值（tan A、cot B）</td><td>例 17</td></tr>
+        <tr><td><span class="badge lv2">L2</span></td><td>19–21</td><td>化简 + cot(α±β) 的公式应用</td><td>例 18、19</td></tr>
+        <tr><td><span class="badge lv2">L2</span></td><td>22–24</td><td>证明恒等式（含 A+B+C = 180° 的三角形条件）</td><td>例 20</td></tr>
+        <tr><td><span class="badge lv2">L2</span></td><td>26–28</td><td>条件恒等式 + 解方程（公开试题型）</td><td>例 20</td></tr>
+        <tr><td><span class="badge lv3">L3</span></td><td>30–32</td><td>极值、求值域、复杂恒等式</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tip"><span class="lbl">第 24 题值得单练</span><span class="math">A + B + C = 180° ⇒ tan A + tan B + tan C = tan A tan B tan C</span>。证明思路：C = 180° − (A+B) ⇒ tan C = −tan(A+B)，代入 tan(A+B) 公式通分即得。结论本身是「三角形三内角正切之和 = 三正切之积」，DSE 反复考。</div>
+</section>
+
+<!-- ================= 3.5 ================= -->
+<section id="s35">
+  <div class="sec-head"><span class="no">3.5</span><h2>二倍角公式 Double Angle Formulae</h2><span class="pg">pp. 3.40 – 3.47 ｜ Exercise 3E</span></div>
+
+  <div class="card">
+    <h4 style="margin-top:0">本节定位</h4>
+    <p>3.4 的「免费附赠品」：在复角公式中令 <b>B = A</b>，立刻得到 sin 2A、cos 2A、tan 2A。它的真正价值有两块：<b>① 降幂/升角</b>（<span class="math">cos<sup>2</sup>A = (1 + cos 2A)/2</span>，把平方变成一次方，是微积分求积分的必备变形）；<b>② 三倍角与三次方程</b>（<span class="math">cos 3θ</span> 与 <span class="math">4x<sup>3</sup> − 3x</span> 的对应，DSE 2016/2012 都考过）。</p>
+  </div>
+
+  <h3>A · 三条二倍角公式</h3>
+  <div class="formula"><b>来自 Class Activity 3.2（用 3.4 公式令 B = A）</b>
+    <span class="eq"><span class="math">sin 2A = 2 sin A cos A</span></span>
+    <span class="eq"><span class="math">cos 2A = cos<sup>2</sup>A − sin<sup>2</sup>A = 2cos<sup>2</sup>A − 1 = 1 − 2sin<sup>2</sup>A</span>　<span class="pill">三种形式必须都熟</span></span>
+    <span class="eq"><span class="math">tan 2A = <span class="f"><i>2 tan A</i><b>1 − tan<sup>2</sup>A</b></span></span></span>
+  </div>
+  <div class="formula"><b>降幂（半角）公式 —— 由 cos 2A 的另两种形式反解</b>
+    <span class="eq"><span class="math">sin<sup>2</sup>A = <span class="f"><i>1 − cos 2A</i><b>2</b></span></span>　　<span class="math">cos<sup>2</sup>A = <span class="f"><i>1 + cos 2A</i><b>2</b></span></span></span>
+    <span class="eq">写成半角形式即：<span class="math">sin<sup>2</sup>(θ/2) = <span class="f"><i>1 − cos θ</i><b>2</b></span></span>，<span class="math">cos<sup>2</sup>(θ/2) = <span class="f"><i>1 + cos θ</i><b>2</b></span></span></span>
+  </div>
+  <div class="tip"><span class="lbl">三个 cos 2A 怎么选</span>看到算式里还剩 <b>cos A</b>（如例 21 分母有 cos A）就用 <span class="math">2cos<sup>2</sup>A − 1</span>；还剩 <b>sin A</b> 就用 <span class="math">1 − 2sin<sup>2</sup>A</span>；两个都有就用原始的 <span class="math">cos<sup>2</sup>A − sin<sup>2</sup>A</span>。<b>目标是让式子的函数种类统一</b>。</div>
+
+  <h3>B · 三倍角公式（教材例 24 的重点延伸）</h3>
+  <div class="formula"><b>由 tan(2x + x) / cos(2x + x) / sin(2x + x) 推出</b>
+    <span class="eq"><span class="math">tan 3x = <span class="f"><i>3 tan x − tan<sup>3</sup>x</i><b>1 − 3tan<sup>2</sup>x</b></span></span>　（要求 <span class="math">tan<sup>2</sup>x ≠ 1/3</span>）</span>
+    <span class="eq"><span class="math">cos 3x = 4 cos<sup>3</sup>x − 3 cos x</span>　<span class="pill">Exercise 3E 常见</span></span>
+    <span class="eq"><span class="math">sin 3x = 3 sin x − 4 sin<sup>3</sup>x</span>　<span class="pill">DSE 2017 / 2012 直接用到</span></span>
+  </div>
+  <div class="note"><span class="lbl">为什么 DSE 爱考三倍角</span>因为 <span class="math">cos 3θ = 4cos<sup>3</sup>θ − 3cos θ</span> 把「三角」与「三次方程」连了起来：给定 <span class="math">cos 3θ = k</span>，就等价于求 <span class="math">4x<sup>3</sup> − 3x = k</span> 的根，于是可由「已知一根」配合因式定理求其余根（HKDSE 2016 Q6 正是如此）。</div>
+
+  <h3>本节例题（拆解 + 答案要点）</h3>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 21</span><span class="ex-title">化简（p.3.41）</span><span class="badge lv1">L1</span></summary>
+    <div class="body">
+      <p>化简 <span class="math"><span class="f"><i>1 − cos 2θ</i><b>sin 2θ</b></span></span></p>
+      <div class="formula"><span class="math">
+        <span class="eq">= <span class="f"><i>(1 − (1 − 2sin<sup>2</sup>θ))</i><b>2 sin θ cos θ</b></span> = <span class="f"><i>2 sin<sup>2</sup>θ</i><b>2 sin θ cos θ</b></span> = <span class="f"><i>sin θ</i><b>cos θ</b></span> = <b>tan θ</b></span>
+      </span></div>
+      <p><b>经典结论</b>：<span class="math">(1 − cos 2θ)/sin 2θ = tan θ</span>、<span class="math">(1 + cos 2θ)/sin 2θ = cot θ</span>，两个都在 Exercise 3E / 3F 与真题中反复出现，直接记住可省时间。</p>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 22</span><span class="ex-title">用二倍角反求 tan 15°（p.3.41）</span><span class="badge lv1">L1</span></summary>
+    <div class="body">
+      <p>用二倍角公式求 tan(π/12)。</p>
+      <div class="formula"><span class="math">
+        <span class="eq">tan <span class="f"><i>π</i><b>6</b></span> = tan(2 × <span class="f"><i>π</i><b>12</b></span>) ⇒ <span class="f"><i>1</i><b>√3</b></span> = <span class="f"><i>2 tan(π/12)</i><b>1 − tan<sup>2</sup>(π/12)</b></span></span>
+        <span class="eq">⇒ 1 − tan<sup>2</sup>(π/12) = 2√3 tan(π/12) ⇒ tan<sup>2</sup>(π/12) + 2√3 tan(π/12) − 1 = 0</span>
+        <span class="eq">⇒ tan(π/12) = <span class="f"><i>−2√3 ± √(12 + 4)</i><b>2</b></span> = −√3 ± 2</span>
+        <span class="eq">π/12 在第 I 象限 ⇒ tan 为正 ⇒ <b>tan(π/12) = 2 − √3</b></span>
+      </span></div>
+      <div class="warn"><span class="lbl">二次公式 + 象限定号</span>是标准两步骤。另一根 −√3 − 2 为负值，直接舍去。检验：tan 15° ≈ 0.2679，2 − √3 ≈ 0.2679 ✔</div>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 23</span><span class="ex-title">降幂证明 + 解四次方程（p.3.42）</span><span class="badge lv2">L2</span> <span class="badge lv3">★ 公开试题</span></summary>
+    <div class="body">
+      <p>(a) 证明 <span class="math">8cos<sup>4</sup>θ = 3 + 4cos 2θ + cos 4θ</span>；(b) 解 <span class="math">4cos 2θ + cos 4θ = −1</span>，0 ≤ θ ≤ π。</p>
+      <div class="formula"><span class="math">
+        <span class="eq">(a) R.H.S. = 3 + 4cos 2θ + (2cos<sup>2</sup>2θ − 1) = 2 + 4cos 2θ + 2cos<sup>2</sup>2θ</span>
+        <span class="eq">　 = 2(1 + cos 2θ)<sup>2</sup> = 2(2cos<sup>2</sup>θ)<sup>2</sup> = <b>8cos<sup>4</sup>θ</b> = L.H.S.</span>
+        <span class="eq">(b) 由 (a)：3 + 4cos 2θ + cos 4θ = −1 + 3 ⇒ 8cos<sup>4</sup>θ = 2 ⇒ cos<sup>4</sup>θ = 1/4</span>
+        <span class="eq">　 ⇒ cos<sup>2</sup>θ = 1/2（−1/2 舍去）⇒ cos θ = ±<span class="f"><i>1</i><b>√2</b></span></span>
+        <span class="eq">　 0 ≤ θ ≤ π ⇒ <b>θ = π/4 或 3π/4</b></span>
+      </span></div>
+      <div class="tip"><span class="lbl">(a) 的证法方向</span>：从 R.H.S.（含 4θ）往 L.H.S.（含 4 次方）走是「降角升幂」，比反过来容易得多。<b>经验法则：从「角更大、次数更低」的那一边开始化简。</b></div>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 24</span><span class="ex-title">tan 3x 与乘积恒等式（p.3.43–44）</span><span class="badge lv2">L2</span> <span class="badge lv3">★ 公开试题</span></summary>
+    <div class="body">
+      <p>(a) 已知 <span class="math">tan<sup>2</sup>x ≠ 1/3</span>，证明 (i) <span class="math">tan 3x = <span class="f"><i>3tan x − tan<sup>3</sup>x</i><b>1 − 3tan<sup>2</sup>x</b></span></span>，(ii) <span class="math">tan x · tan(π/3 − x) · tan(π/3 + x) = tan 3x</span>；(b) 据此证明 <span class="math">tan(5π/18)·tan(π/3)·tan(7π/18) = tan(4π/9)</span>。</p>
+      <div class="formula"><span class="math">
+        <span class="eq">(a)(i) tan 3x = tan(2x + x) = <span class="f"><i>tan 2x + tan x</i><b>1 − tan 2x tan x</b></span>，把 tan 2x = <span class="f"><i>2t</i><b>1 − t<sup>2</sup></b></span> 代入并通分（t = tan x）得 <span class="f"><i>3t − t<sup>3</sup></i><b>1 − 3t<sup>2</sup></b></span></span>
+        <span class="eq">(a)(ii) tan(π/3 ± x) = <span class="f"><i>√3 ± t</i><b>1 ∓ √3t</b></span> ⇒ 两式相乘 = <span class="f"><i>3 − t<sup>2</sup></i><b>1 − 3t<sup>2</sup></b></span>；再乘 t 得 <span class="f"><i>3t − t<sup>3</sup></i><b>1 − 3t<sup>2</sup></b></span> = tan 3x</span>
+        <span class="eq">(b) 取 x = π/18（= 10°）：tan(π/18)tan(5π/18)tan(7π/18) = tan(π/6)</span>
+        <span class="eq">　 两边同除 tan(π/18) 并用 tan(π/18)tan(π/3) = 1/√3 等关系，即得 <b>tan(5π/18)tan(π/3)tan(7π/18) = tan(4π/9)</b></span>
+      </span></div>
+      <div class="note"><span class="lbl">(b) 的思路</span>：观察到 <span class="math">5π/18 + 7π/18 = 12π/18 = 2π/3</span>、<span class="math">π/18 + π/6 = 2π/9</span>，于是猜出应代 <span class="math">x = π/18</span>。这类「<b>猜一个特殊角</b>」的题目必须先看数字关系（两角之和 / 差是否为特殊角），再动笔。</div>
+    </div>
+  </details>
+
+  <h3>本节陷阱</h3>
+  <div class="warn"><span class="lbl">Do's and Don'ts</span>
+    <ul style="margin-bottom:0">
+      <li><b>sin 2A ≠ 2 sin A</b>；<b>cos 2A ≠ 2 cos A</b>。唯一「可以提 2」的是 sin 2A = 2 sin A cos A。</li>
+      <li><b>降幂公式记反</b>：<span class="math">sin<sup>2</sup>A</span> 配 <b>减</b>（1 − cos 2A），<span class="math">cos<sup>2</sup>A</span> 配 <b>加</b>（1 + cos 2A）。</li>
+      <li><b>开方丢负根</b>：由 <span class="math">cos<sup>2</sup>θ = 1/2</span> 得 <span class="math">cos θ = ±1/√2</span>，再按区间取舍（例 23）。</li>
+      <li><b>tan 2A 只对 tan A 有定义处成立</b>，且分母 <span class="math">1 − tan<sup>2</sup>A ≠ 0</span>。</li>
+      <li><b>把 4θ 直接当 4×θ 展开</b>：<span class="math">cos 4θ</span> 要用两次二倍角（<span class="math">cos 4θ = 2cos<sup>2</sup>2θ − 1</span>）。</li>
+    </ul>
+  </div>
+
+  <h3>练习映射 · Exercise 3E（p.3.45–3.47，共 27 题）</h3>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>难度</th><th>题号</th><th>题型</th><th>对应例题</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge lv1">L1</span></td><td>1–3</td><td>给 cos x / sin x / tan θ 求 2θ、4θ 的函数值</td><td>例 22</td></tr>
+        <tr><td><span class="badge lv1">L1</span></td><td>4–5</td><td>化简（含 <span class="math">(sin θ + cos θ)<sup>2</sup></span>、<span class="math">1/(1+tan θ)</span> 型）</td><td>例 21</td></tr>
+        <tr><td><span class="badge lv1">L1</span></td><td>6–9</td><td>证明恒等式 + 代入求值（含 15°、22.5°、67.5°）</td><td>例 21、22</td></tr>
+        <tr><td><span class="badge lv1">L1</span></td><td>10–13</td><td>由 cos u = f(π/7)、tan v = f(2π/9) 反求 u、v</td><td>例 22</td></tr>
+        <tr><td><span class="badge lv2">L2</span></td><td>14–19</td><td>证明恒等式（含 tan 2A、cot 2A 混合）</td><td>例 23</td></tr>
+        <tr><td><span class="badge lv2">L2</span></td><td>20–22</td><td>降幂证明 + 解方程</td><td>例 23</td></tr>
+        <tr><td><span class="badge lv3">L3</span></td><td>26–27</td><td><span class="math">tan 2x = 2/(sec<sup>2</sup>x − tan<sup>2</sup>x)</span> 型连锁恒等式；极值</td><td>例 24</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ================= 3.6 ================= -->
+<section id="s36">
+  <div class="sec-head"><span class="no">3.6</span><h2>和积公式 Sum and Product Formulae</h2><span class="pg">pp. 3.47 – 3.57 ｜ Exercise 3F</span></div>
+
+  <div class="card">
+    <h4 style="margin-top:0">本节定位</h4>
+    <p>把 3.4 的六条公式「<b>加减</b>」一下，就得到两组互逆公式：<b>积化和差</b>（乘 → 加）与<b>和差化积</b>（加 → 乘）。它们解决的是「<b>次数太高</b>」或「<b>项数太多</b>」的问题，是 DSE M2 长题（6–8 分）的标配工具。本节还引入一个跨主题难点：<b>与数学归纳法联手的求和恒等式</b>（例 31、Exercise 3F 第 30–31 题、HKDSE 2015 Q8）。</p>
+  </div>
+
+  <h3>A · 积化和差公式（Product-to-sum）</h3>
+  <p>来源（Class Activity 3.3）：把 sin(A+B) 与 sin(A−B) 两式<b>相加</b>、<b>相减</b>。</p>
+  <div class="formula"><b>三条主公式</b>
+    <span class="eq"><span class="math">2 sin A cos B = sin(A + B) + sin(A − B)</span></span>
+    <span class="eq"><span class="math">2 cos A cos B = cos(A + B) + cos(A − B)</span></span>
+    <span class="eq"><span class="math">2 sin A sin B = cos(A − B) − cos(A + B)</span></span>
+  </div>
+  <div class="note"><span class="lbl">第 4 条不是新的</span>（教材 p.3.48 特别说明）：<span class="math">2 cos A sin B = sin(A + B) − sin(A − B)</span> 与第一条等价（只是交换了 A、B 的写法）。因此<b>只需背 3 条</b>，遇到 <span class="math">cos A sin B</span> 把两条「对调」即可。第 3 条最易错：<b>右边是 cos(A−B) − cos(A+B)</b>，<b>减号</b>且在<b>后面</b>（因为 cos 是偶函数、和角在余弦里变号）。</div>
+  <div class="tip"><span class="lbl">记忆口诀</span>「<b>正余相加、余余相加、正正相减且反序</b>」；且<b>左边是 2 倍乘积，右边是两个同名函数之和/差</b>。</div>
+
+  <h3>B · 和差化积公式（Sum-to-product）</h3>
+  <p>来源：把积化和差<b>反过来用</b>。令 <span class="math">x + y = A</span>、<span class="math">x − y = B</span>，则 <span class="math">x = (A+B)/2</span>、<span class="math">y = (A−B)/2</span>。</p>
+  <div class="formula"><b>四条</b>
+    <span class="eq"><span class="math">sin A + sin B = 2 sin<span class="f"><i>A + B</i><b>2</b></span> cos<span class="f"><i>A − B</i><b>2</b></span></span></span>
+    <span class="eq"><span class="math">sin A − sin B = 2 cos<span class="f"><i>A + B</i><b>2</b></span> sin<span class="f"><i>A − B</i><b>2</b></span></span></span>
+    <span class="eq"><span class="math">cos A + cos B = 2 cos<span class="f"><i>A + B</i><b>2</b></span> cos<span class="f"><i>A − B</i><b>2</b></span></span></span>
+    <span class="eq"><span class="math">cos A − cos B = <b>−</b>2 sin<span class="f"><i>A + B</i><b>2</b></span> sin<span class="f"><i>A − B</i><b>2</b></span></span>　<span class="pill">注意前置负号！</span></span>
+  </div>
+  <div class="warn"><span class="lbl">四条公式的差异只有一个格子</span>
+    <ul style="margin-bottom:0">
+      <li>「和」+ sin → <b>sin · cos</b>（顺序不变）</li>
+      <li>「差」+ sin → <b>cos · sin</b>（顺序互换）</li>
+      <li>「和」+ cos → <b>cos · cos</b></li>
+      <li>「差」+ cos → <b>−sin · sin</b>（<b>唯一带负号</b>的一条）</li>
+    </ul>
+    判断左边的 A、B 谁大谁小？公式里一律用 (A+B)/2 与 (A−B)/2，<b>不需要</b>先判断大小，只需注意最后一条的负号。
+  </div>
+
+  <h3>本节例题（拆解 + 答案要点）</h3>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 25</span><span class="ex-title">积 → 和（p.3.48）</span><span class="badge lv1">L1</span></summary>
+    <div class="body">
+      <p>(a) 2 sin 3θ cos 6θ；(b) cos 4θ cos θ；(c) sin 7θ sin 2θ</p>
+      <div class="formula"><span class="math">
+        <span class="eq">(a) = sin(9θ) + sin(−3θ) = <b>sin 9θ − sin 3θ</b>　<span class="pill">sin 是奇函数，负号前移</span></span>
+        <span class="eq">(b) = <span class="f"><i>1</i><b>2</b></span>[cos(5θ) + cos(3θ)]　<span class="pill">左边没有 2 就先「提取 2」</span></span>
+        <span class="eq">(c) = <span class="f"><i>1</i><b>2</b></span>[cos 5θ − cos 9θ]</span>
+      </span></div>
+      <p><b>两个动作</b>：① 左边系数不是 2 时，先写成 <span class="math"><span class="f"><i>1</i><b>2</b></span> × 2·(乘积)</span>；② sin(−x) = −sin x 把负号拿出来。</p>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 26</span><span class="ex-title">不用计算器求值（p.3.49）</span><span class="badge lv1">L1</span></summary>
+    <div class="body">
+      <p>求 4 sin 52.5° sin 97.5°。</p>
+      <div class="formula"><span class="math">
+        <span class="eq">= 2 · 2 sin 52.5° sin 97.5° = 2[cos(52.5° − 97.5°) − cos(52.5° + 97.5°)]</span>
+        <span class="eq">= 2[cos(−45°) − cos 150°] = 2[cos 45° + cos 30°] = 2( <span class="f"><i>√2</i><b>2</b></span> + <span class="f"><i>√3</i><b>2</b></span> ) = <b>√2 + √3</b></span>
+      </span></div>
+      <div class="tip"><span class="lbl">为什么能「不用计算器」</span>52.5° 与 97.5° 的<b>半和 = 75°</b>、<b>半差 = −22.5°</b>，都不是特殊角；但<b>差与和</b>分别是 45° 与 150°，全是特殊角。这正是和差化积/积化和差的用途：<b>把不好算的乘积变成好算的和差</b>。判断用哪条：看 A±B 是否为特殊角的整数倍。</div>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 27</span><span class="ex-title">和 → 积证明恒等式（p.3.49）</span><span class="badge lv2">L2</span></summary>
+    <div class="body">
+      <p>证明 <span class="math">cos(x + π/4) cos(x − π/4) = <span class="f"><i>1</i><b>2</b></span>cos 2x</span></p>
+      <div class="formula"><span class="math">
+        <span class="eq">L.H.S. = <span class="f"><i>1</i><b>2</b></span>[cos((x + π/4) + (x − π/4)) + cos((x + π/4) − (x − π/4))]</span>
+        <span class="eq">= <span class="f"><i>1</i><b>2</b></span>[cos 2x + cos(π/2)] = <span class="f"><i>1</i><b>2</b></span>cos 2x = R.H.S. ∎</span>
+      </span></div>
+      <p><b>信号识别</b>：乘积形式的两项若含<b>同一个未知量 x</b> 并配以常数角，用积化和差后常数角会互相抵消，只剩 2x —— 这类恒等式几乎都这么证。</p>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 28</span><span class="ex-title">和 → 积（p.3.50）</span><span class="badge lv1">L1</span></summary>
+    <div class="body">
+      <p>(a) sin θ + sin 3θ；(b) cos 5y + cos 2y</p>
+      <div class="formula"><span class="math">
+        <span class="eq">(a) = 2 sin<span class="f"><i>4θ</i><b>2</b></span> cos<span class="f"><i>−2θ</i><b>2</b></span> = 2 sin 2θ cos(−θ) = <b>2 sin 2θ cos θ</b></span>
+        <span class="eq">(b) = 2 cos<span class="f"><i>7y</i><b>2</b></span> cos<span class="f"><i>3y</i><b>2</b></span> = <b>2 cos(7y/2) cos(3y/2)</b></span>
+      </span></div>
+      <p><b>提示</b>cos 是偶函数，<span class="math">cos(−θ) = cos θ</span>，负号可以直接去掉；sin 是奇函数则不能。这在小问的「最终答案形式」里会被检查。</p>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 29</span><span class="ex-title">和 → 积化简分式（p.3.51）</span><span class="badge lv2">L2</span></summary>
+    <div class="body">
+      <p>(a) 证明 <span class="math"><span class="f"><i>cos 3x − cos 2x</i><b>sin 3x − sin 2x</b></span> = −tan<span class="f"><i>5x</i><b>2</b></span></span>；(b) 证明 <span class="math"><span class="f"><i>sin θ + sin 3θ + sin 5θ</i><b>cos θ + cos 3θ + cos 5θ</b></span> = tan 3θ</span></p>
+      <div class="formula"><span class="math">
+        <span class="eq">(a) 分子 = −2 sin<span class="f"><i>3x + 2x</i><b>2</b></span> sin<span class="f"><i>3x − 2x</i><b>2</b></span> = −2 sin<span class="f"><i>5x</i><b>2</b></span> sin<span class="f"><i>x</i><b>2</b></span>　<span class="pill">cos A − cos B 带负号</span></span>
+        <span class="eq">　 分母 = 2 cos<span class="f"><i>5x</i><b>2</b></span> sin<span class="f"><i>x</i><b>2</b></span>　⇒ 原式 = −<span class="f"><i>sin(5x/2)</i><b>cos(5x/2)</b></span> = <b>−tan(5x/2)</b></span>
+        <span class="eq">(b) 分组：<b>首尾合并</b> —— (sin 5θ + sin θ) + sin 3θ 与 (cos 5θ + cos θ) + cos 3θ</span>
+        <span class="eq">　 分子 = 2 sin 3θ cos 2θ + sin 3θ = <b>sin 3θ(2cos 2θ + 1)</b></span>
+        <span class="eq">　 分母 = 2 cos 3θ cos 2θ + cos 3θ = <b>cos 3θ(2cos 2θ + 1)</b></span>
+        <span class="eq">　 ⇒ 约去公因式 (2cos 2θ + 1)，得 <b>tan 3θ</b> = R.H.S. ∎</span>
+      </span></div>
+      <div class="tip"><span class="lbl">(b) 为什么必须「首尾合并」</span>θ 与 5θ 的平均值恰好是 <b>3θ</b>，与中间项同频 ⇒ 合并后出现公因式 sin 3θ（或 cos 3θ），再与剩下的 <span class="math">2cos 2θ + 1</span> 一起被约掉。若把 θ 与 3θ 合并，平均值是 2θ，与 5θ 不同频，式子只会越来越乱。<b>口诀：三项式一律合并首尾两项。</b></div>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 30</span><span class="ex-title">三项式 → 因式 → 解方程（p.3.52）</span><span class="badge lv2">L2</span> <span class="badge lv3">★ 公开试题</span></summary>
+    <div class="body">
+      <p>(a) 证明 <span class="math">sin θ − sin 2θ + sin 3θ = sin 2θ(2cos θ − 1)</span>；(b) 解该式 = 0，0 &lt; θ &lt; π。</p>
+      <div class="formula"><span class="math">
+        <span class="eq">(a) L.H.S. = (sin 3θ + sin θ) − sin 2θ = 2 sin 2θ cos θ − sin 2θ = <b>sin 2θ(2cos θ − 1)</b> = R.H.S.</span>
+        <span class="eq">(b) sin 2θ = 0 或 2cos θ − 1 = 0</span>
+        <span class="eq">　 0 &lt; θ &lt; π ⇒ 0 &lt; 2θ &lt; 2π ⇒ 2θ = π ⇒ <b>θ = π/2</b>；或 cos θ = 1/2 ⇒ <b>θ = π/3</b></span>
+      </span></div>
+      <div class="tip"><span class="lbl">「三项选两项合并」原则</span>：sin θ − sin 2θ + sin 3θ 中，<b>θ 与 3θ 的平均值是 2θ</b>，与中间项同频，所以把 θ 与 3θ 结合。合并后出现公因式 sin 2θ，一提取就完成因式分解。<b>永远选「首尾两项」合并</b>，这是通法。</div>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">例 31</span><span class="ex-title">数学归纳法 + 求和恒等式（p.3.52–53）</span><span class="badge lv2">L2</span> <span class="badge lv3">★ 公开试题</span></summary>
+    <div class="body">
+      <p>(a) 用数学归纳法证明 <span class="math">sin x + sin 2x + … + sin nx = <span class="f"><i>sin(nx/2) sin((n+1)x/2)</i><b>sin(x/2)</b></span></span>（对所有正整数 n）；(b) 据此求 <span class="math">Σ<sub>k=1</sub><sup>14</sup> sin(kπ/28)</span> 的值。</p>
+      <div class="formula"><b>归纳法五步（教材 p.3.52 右侧「Performing Proofs by Mathematical Induction」）</b>
+        <span class="eq">① 定义命题 P(n)　② 证明 P(1) 成立　③ 假设 P(m) 成立（m 为正整数）</span>
+        <span class="eq">④ 在假设下证明 P(m+1) 成立：<b>把「多加的那一项」与假设式相加，再用和积公式合并</b></span>
+        <span class="eq">⑤ 由数学归纳法原理，P(n) 对所有正整数 n 成立</span>
+      </div>
+      <div class="formula"><b>第 ④ 步的关键代数</b>
+        <span class="eq"><span class="f"><i>sin(mx/2)sin((m+1)x/2)</i><b>sin(x/2)</b></span> + sin(m+1)x</span>
+        <span class="eq">= <span class="f"><i>sin(mx/2)sin((m+1)x/2) + sin(m+1)x sin(x/2)</i><b>sin(x/2)</b></span></span>
+        <span class="eq">= <span class="f"><i>(1/2)[cos(x/2) − cos((2m+1)x/2)] + (1/2)[cos((2m+1)x/2) − cos((2m+3)x/2)]</i><b>sin(x/2)</b></span>（积化和差）</span>
+        <span class="eq">= <span class="f"><i>sin((m+1)x/2) sin((m+2)x/2)</i><b>sin(x/2)</b></span>　✔ 目标形式</span>
+      </div>
+      <div class="tip"><span class="lbl">(b) 的取角</span>：令 <span class="math">x = π/28</span>、<span class="math">n = 14</span>，则 <span class="math">nx/2 = π/4</span>、<span class="math">(n+1)x/2 = 15π/56</span>，代入公式约化即得答案（教材 p.3.53 的收尾）。<b>这类题的采分点不在 (b)，而在 (a) 的第 ④ 步是否写出「积化和差」这一步。</b></div>
+    </div>
+  </details>
+
+  <h3>本节陷阱</h3>
+  <div class="warn"><span class="lbl">Do's and Don'ts</span>
+    <ul style="margin-bottom:0">
+      <li><b>cos A − cos B 的负号丢了</b>：这是本节第一大失分点（教材 p.3.51 甚至专门画了「Do not miss out the sign '−'」）。</li>
+      <li><b>sin(A−B) 的展开与积化和差混用</b>：两者结构相似但含义不同，先明确你要「拆开」还是「合并」。</li>
+      <li><b>系数 2 的处理</b>：积化和差左边系数必须为 2；不是就补 <span class="math">1/2</span>。</li>
+      <li><b>合并不完全就下结论</b>：三项式合并后要能「提取公因式」，若提不出来说明合并对象选错了（该选首尾）。</li>
+      <li><b>归纳法第 ④ 步只写「由假设可得」</b>而不做代数运算——过程分全丢。</li>
+    </ul>
+  </div>
+
+  <h3>练习映射 · Exercise 3F（p.3.55–3.57，共 34 题）</h3>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>难度</th><th>题号</th><th>题型</th><th>对应例题</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge lv1">L1</span></td><td>1–2</td><td>积 → 和/差</td><td>例 25</td></tr>
+        <tr><td><span class="badge lv1">L1</span></td><td>3–4</td><td>和/差 → 积</td><td>例 28</td></tr>
+        <tr><td><span class="badge lv1">L1</span></td><td>5–6</td><td>不用计算器求值（含 cos 20°cos 40°cos 80°）</td><td>例 26</td></tr>
+        <tr><td><span class="badge lv1">L1</span></td><td>7–13</td><td>证明恒等式（积化和差 + 半角）</td><td>例 27</td></tr>
+        <tr><td><span class="badge lv1">L1</span></td><td>14–15</td><td>先证后解（含 <span class="math">sin(x−π/6) + sin(x+π/6)</span> 型）</td><td>例 30</td></tr>
+        <tr><td><span class="badge lv2">L2</span></td><td>18–20</td><td>分式型和积化简</td><td>例 29</td></tr>
+        <tr><td><span class="badge lv2">L2</span></td><td>21</td><td>乘积恒等式</td><td>例 27</td></tr>
+        <tr><td><span class="badge lv2">L2</span></td><td>24–25</td><td>三项式因式 + 解方程</td><td>例 30</td></tr>
+        <tr><td><span class="badge lv2">L2</span></td><td>29</td><td>三角形内角恒等式（A+B+C = π）</td><td>—</td></tr>
+        <tr><td><span class="badge lv2">L2</span></td><td>30–32</td><td>数学归纳法证明求和公式；交错符号求和</td><td>例 31</td></tr>
+        <tr><td><span class="badge lv3">L3</span></td><td>33–34</td><td>极值、值域与综合证明</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tip"><span class="lbl">必记住的两个「金句恒等式」</span>（真题高频）
+    <span class="eq"><span class="math">sin A + sin B + sin C = 4 cos(A/2)cos(B/2)cos(C/2)</span>（A+B+C = π 时，即三角形的正弦和）</span>
+    <span class="eq"><span class="math">sin 2A + sin 2B + sin 2C = 4 sin A sin B sin C</span>（同上条件，Exercise 3F 第 29 题）</span>
+  </div>
+</section>
+
+<!-- ================= 公式总表 ================= -->
+<section id="formulas">
+  <div class="sec-head"><span class="no">②</span><h2>公式总表（考前 10 分钟版）</h2><span class="pg">对应 Chapter Summary pp. 3.58–3.59</span></div>
+
+  <p>下面六张卡片合起来就是教材 Chapter Summary 的完整内容——<b>打印这一节即可上考场</b>。每张卡片后标注了「本章哪一节的例题会用到」，方便回查。</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h4 style="margin-top:0">1 · 弧度制</h4>
+      <div class="math">
+        <span class="eq">θ = ℓ / r（rad）</span>
+        <span class="eq">180° = π rad</span>
+        <span class="eq">1° = π/180 ≈ 0.0175 rad</span>
+        <span class="eq">1 rad = 180°/π ≈ 57.3°</span>
+      </div>
+      <p style="font-size:13.4px;color:var(--ink2)">用于：例 1、例 2、Exercise 3A 全部</p>
+    </div>
+
+    <div class="card">
+      <h4 style="margin-top:0">2 · 六个三角函数（任意角 θ，P(x, y)，r = √(x²+y²)）</h4>
+      <div class="math">
+        <span class="eq">sin θ = y/r　　cosec θ = r/y</span>
+        <span class="eq">cos θ = x/r　　sec θ = r/x</span>
+        <span class="eq">tan θ = y/x　　cot θ = x/y</span>
+      </div>
+      <p style="font-size:13.4px;color:var(--ink2)">用于：例 3、例 5、例 6、Exercise 3B 1–13</p>
+    </div>
+
+    <div class="card">
+      <h4 style="margin-top:0">3 · 三类恒等式</h4>
+      <div class="math">
+        <span class="eq">cosec θ = 1/sin θ　sec θ = 1/cos θ　cot θ = 1/tan θ</span>
+        <span class="eq">tan θ = sin θ / cos θ　cot θ = cos θ / sin θ</span>
+        <span class="eq">sin²θ + cos²θ = 1</span>
+        <span class="eq">1 + tan²θ = sec²θ</span>
+        <span class="eq">1 + cot²θ = cosec²θ</span>
+      </div>
+      <p style="font-size:13.4px;color:var(--ink2)">用于：例 10–15、Exercise 3C 全部</p>
+    </div>
+
+    <div class="card">
+      <h4 style="margin-top:0">4 · 复角公式</h4>
+      <div class="math">
+        <span class="eq">sin(A ± B) = sin A cos B ± cos A sin B</span>
+        <span class="eq">cos(A ± B) = cos A cos B ∓ sin A sin B</span>
+        <span class="eq">tan(A + B) = (tan A + tan B)/(1 − tan A tan B)</span>
+        <span class="eq">tan(A − B) = (tan A − tan B)/(1 + tan A tan B)</span>
+      </div>
+      <p style="font-size:13.4px;color:var(--ink2)">用于：例 16–20、Exercise 3D 全部</p>
+    </div>
+
+    <div class="card">
+      <h4 style="margin-top:0">5 · 二倍角公式</h4>
+      <div class="math">
+        <span class="eq">sin 2A = 2 sin A cos A</span>
+        <span class="eq">cos 2A = cos²A − sin²A = 2cos²A − 1 = 1 − 2sin²A</span>
+        <span class="eq">tan 2A = 2 tan A / (1 − tan²A)</span>
+        <span class="eq">sin²A = (1 − cos 2A)/2　　cos²A = (1 + cos 2A)/2</span>
+      </div>
+      <p style="font-size:13.4px;color:var(--ink2)">用于：例 21–24、Exercise 3E 全部</p>
+    </div>
+
+    <div class="card">
+      <h4 style="margin-top:0">6 · 和积公式</h4>
+      <div class="math">
+        <span class="eq"><b>积化和差</b></span>
+        <span class="eq">2 sin A cos B = sin(A+B) + sin(A−B)</span>
+        <span class="eq">2 cos A cos B = cos(A+B) + cos(A−B)</span>
+        <span class="eq">2 sin A sin B = cos(A−B) − cos(A+B)</span>
+        <span class="eq"><b>和差化积</b></span>
+        <span class="eq">sin A ± sin B = 2 sin((A±B)/2) cos((A∓B)/2)</span>
+        <span class="eq">cos A + cos B = 2 cos((A+B)/2) cos((A−B)/2)</span>
+        <span class="eq">cos A − cos B = −2 sin((A+B)/2) sin((A−B)/2)</span>
+      </div>
+      <p style="font-size:13.4px;color:var(--ink2)">用于：例 25–31、Exercise 3F 全部</p>
+    </div>
+  </div>
+
+  <div class="warn"><span class="lbl">「默写自检」标准</span>能在 8 分钟内、不看书画出上面 6 张卡片（含诱导公式两大表），说明公式层已过关；否则考前任何题型练习都是在「边查表边做题」，效率极低。</div>
+</section>
+
+<!-- ================= 解题套路 ================= -->
+<section id="strategy">
+  <div class="sec-head"><span class="no">③</span><h2>六大解题套路（逐条可操作）</h2><span class="pg">从 31 个例题中提炼</span></div>
+
+  <p>本章的题目看似花样多，实质上只有六类动作。把下面的「触发信号 → 标准动作」练成条件反射，速度与准确率会同时上升。</p>
+
+  <details class="example" open>
+    <summary><span class="ex-no">套路 1</span><span class="ex-title">给点求值 / 给值求值</span><span class="badge lv1">基础</span></summary>
+    <div class="body">
+      <p><b>触发信号</b>：题目给出 P(x, y) 坐标，或给一个三角函数值 + 象限/区间。</p>
+      <ol>
+        <li>若给坐标：算 <span class="math">r = √(x<sup>2</sup>+y<sup>2</sup>)</span>（必正）→ 直写六个比值。</li>
+        <li>若给一个值：<b>先判象限</b>（区间 + 该值的符号，取交集）。</li>
+        <li>自设最简单的整数点 (x, y) 符合该象限的符号，再算 r。</li>
+        <li>若要的是倒数函数，直接取倒数或直接写 r/y、r/x。</li>
+        <li>若区间跨两个象限 ⇒ <b>必须写两组答案</b>（例 6）。</li>
+      </ol>
+      <div class="note"><span class="lbl">不要用计算器反三角函数</span>——题目要求「without using a calculator」时，用精确值（如 2/3、√3）作答；用计算器不仅错，还会因小数近似被判错。</div>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">套路 2</span><span class="ex-title">化简（Expression → 单一函数）</span><span class="badge lv1">基础</span></summary>
+    <div class="body">
+      <p><b>触发信号</b>：「Simplify …」，出现 cot / sec / cosec 混合。</p>
+      <ol>
+        <li><b>全部拆成 sin θ 与 cos θ</b>（万能第一步，例 10）。</li>
+        <li>约分、通分；看到 1 与三角函数的组合，考虑替换成平方差（例 12）。</li>
+        <li>结果若含 <span class="math">1/sin<sup>2</sup></span> 型，回写为 cosec²θ 等（题目通常要求「用单一函数表示」）。</li>
+        <li>若出现「sin·cos ± cos·sin」结构，直接认出是 sin(A±B)（例 18）。</li>
+      </ol>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">套路 3</span><span class="ex-title">证明恒等式（L.H.S. → R.H.S.）</span><span class="badge lv2">核心</span></summary>
+    <div class="body">
+      <p><b>触发信号</b>：「Prove that …」。</p>
+      <ol>
+        <li><b>只动一边</b>（通常从较复杂的一边出发），结尾写 R.H.S. 并加 ∎ 或 ∴。</li>
+        <li><b>方向选择</b>：从「次数高/角大」的一边化向「次数低/角小」的一边（例 23）。</li>
+        <li>常用四招：① 通分；② 全拆 sin/cos；③ 把常数 1 换成平方差；④ 用和积公式把「加」做成「乘」（便于约分）。</li>
+        <li>遇到平方混合（如 <span class="math">sin<sup>2</sup>/cos<sup>2</sup></span> 并存），优先降幂到 2A。</li>
+        <li>证明中出现 <span class="math">θ ± π/2</span> 等，先用诱导公式全部换成 θ 的函数（例 14、15）。</li>
+      </ol>
+      <div class="warn"><span class="lbl">禁招</span>两边同时变形、把待证结论当已知代入、「移项后消掉」——阅卷一律不给分。</div>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">套路 4</span><span class="ex-title">解三角方程（含多倍角 / 平移 / 二次型）</span><span class="badge lv2">核心</span></summary>
+    <div class="body">
+      <p><b>触发信号</b>：「Solve … for 0 ≤ x ≤ 2π」。</p>
+      <ol>
+        <li><b>统一</b>：用一个函数表示（必要时用平方恒等式把 sin² 换成 1−cos²）。倒数函数先转成正弦余弦。</li>
+        <li><b>因式分解</b>（二次型）：整体把函数当作字母 t 分解。</li>
+        <li><b>筛根</b>：<span class="math">|sin x| ≤ 1</span>、<span class="math">|cos x| ≤ 1</span>，超出的解写「rejected」。</li>
+        <li><b>换元</b>：遇到 2x、3x 或 x + π/3，令 y = 该整体，<b>区间同步变换</b>，解出 y 后再回代。</li>
+        <li><b>写全解集</b>：先求参考角，再用 CAST 图找出区间内所有解，按大小排列。</li>
+        <li><b>回代检验</b>：把 x 代回原式（尤其含平移和多倍角时），确认无增根。</li>
+      </ol>
+      <div class="tip"><span class="lbl">区间端点</span>0 ≤ x ≤ 2π 与 0 ≤ x &lt; 2π 不同：半开区间不含 2π，别把 2π 写进答案。</div>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">套路 5</span><span class="ex-title">「先证明，再解方程」两问式（DSE 主体）</span><span class="badge lv3">高分</span></summary>
+    <div class="body">
+      <p><b>触发信号</b>：(a) Prove that … (b) Hence solve …。—— 本册 9 套真题中 6 套是这个结构。</p>
+      <ol>
+        <li>(a) 的问法往往暗示了「化简方向」：(b) 要解的方程左边通常<b>正是</b> (a) 要证的左边，所以 (a) 的结论就是 (b) 的第一行。</li>
+        <li>(b) 必须显式写「由 (a)」→ 代入 → 转化为较简单的方程（通常退化为 sin 2θ = 0 或 cos θ = 1/2）。</li>
+        <li>若 (b) 是「Hence evaluate …」，把<b>特殊角代入 (a) 的等式</b>即可，不需要重新推导。</li>
+        <li>(a) 若要求「prove by mathematical induction」，务必写全五步（例 31），第 ④ 步必须做代数运算。</li>
+      </ol>
+    </div>
+  </details>
+
+  <details class="example" open>
+    <summary><span class="ex-no">套路 6</span><span class="ex-title">配凑角与「猜特殊角」</span><span class="badge lv3">高分</span></summary>
+    <div class="body">
+      <p><b>触发信号</b>：要求 tan A 而已知 tan(A+B)；要证 tan(5π/18)·tan(π/3)·tan(7π/18) 之类「长得不像」的等式。</p>
+      <ol>
+        <li><b>配凑角</b>：<span class="math">A = (A+B) − B</span>、<span class="math">A = (A−B) + B</span>（例 17）。</li>
+        <li><b>猜特殊角</b>：看题目中常数的和差是否等于特殊角（例 24 中 5π/18 + 7π/18 = 2π/3），再决定代哪个 x。</li>
+        <li><b>比对系数</b>：把待求式与已证式逐项比对，找出「谁是 α 谁是 β」（例 19）。</li>
+      </ol>
+      <div class="note"><span class="lbl">常见特殊角关系</span><span class="math">π/12 = π/3 − π/4</span>、<span class="math">5π/12 = π/4 + π/6</span>、<span class="math">π/8 · π/12</span> 等；以及 <span class="math">π/18, 5π/18, 7π/18</span> 三兄弟（来自 tan 3x 题）。</div>
+    </div>
+  </details>
+</section>
+
+<!-- ================= 易错清单 ================= -->
+<section id="traps">
+  <div class="sec-head"><span class="no">④</span><h2>易错 &amp; 陷阱清单（按杀伤力排序）</h2><span class="pg">含教材 Do's and Don'ts 全部条目</span></div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th style="width:26%">陷阱</th><th style="width:38%">错误写法</th><th>正确做法 / 出处</th></tr></thead>
+      <tbody>
+        <tr><td><b>① sec 与 sin 混淆</b></td><td class="mono">sec θ = 1/sin θ ✗</td><td class="mono">sec θ = 1/cos θ　（p.3.8 Do's and Don'ts）</td></tr>
+        <tr><td><b>② cos 差角符号</b></td><td class="mono">cos(A−B) = cos A cos B − sin A sin B ✗</td><td class="mono">中间是<b>加号</b>（p.3.32）</td></tr>
+        <tr><td><b>③ 「假公式」直接拆</b></td><td class="mono">sin(A+B) = sin A + sin B ✗</td><td class="mono">必须走复角公式（p.3.31 三条 Don'ts）</td></tr>
+        <tr><td><b>④ cos A − cos B 丢负号</b></td><td class="mono">cos A − cos B = 2 sin sin ✗</td><td class="mono">= <b>−</b>2 sin((A+B)/2) sin((A−B)/2)（p.3.51 专门提示）</td></tr>
+        <tr><td><b>⑤ 平方后保留负号</b></td><td class="mono">cosec²(π+θ) = −cosec²θ ✗</td><td class="mono">平方一律为正（p.3.26 例 15）</td></tr>
+        <tr><td><b>⑥ 只写一组解</b></td><td class="mono">sec θ = −5/3 ⇒ 只给 QII 答案 ✗</td><td class="mono">区间跨象限必须分情况（p.3.14 例 6）</td></tr>
+        <tr><td><b>⑦ 不筛根</b></td><td class="mono">cos x = 3 继续求解 ✗</td><td class="mono">|cos x| ≤ 1，写 rejected（p.3.17 例 9）</td></tr>
+        <tr><td><b>⑧ 多倍角区间未放大</b></td><td class="mono">sec 2x = √2，仍用 0°≤x≤360° 解 ✗</td><td class="mono">令 y=2x ⇒ 0°≤y≤720°（p.3.15 例 7）</td></tr>
+        <tr><td><b>⑨ 计算器未切 RAD</b></td><td class="mono">答案差 57.3 倍</td><td class="mono">屏幕须显示 R / RAD（p.3.11）</td></tr>
+        <tr><td><b>⑩ 降幂公式记反</b></td><td class="mono">sin²A = (1 + cos 2A)/2 ✗</td><td class="mono">sin² 配减、cos² 配加（p.3.40）</td></tr>
+        <tr><td><b>⑪ 开方丢负根</b></td><td class="mono">cos²θ = 1/2 ⇒ cos θ = 1/√2 ✗</td><td class="mono">cos θ = ±1/√2，再按区间取舍（p.3.42）</td></tr>
+        <tr><td><b>⑫ 证明时两边同时变形</b></td><td class="mono">L.H.S. = … = R.H.S.（循环）</td><td class="mono">单边化简到与另一边相同（全章规范）</td></tr>
+        <tr><td><b>⑬ 归纳法跳步</b></td><td class="mono">「由假设可得」而不运算</td><td class="mono">第 ④ 步必须写出积化和差的代数过程（p.3.53）</td></tr>
+        <tr><td><b>⑭ 单位/近似丢失</b></td><td class="mono">答案缺 rad 或未取 3 sig. fig.</td><td class="mono">看题目要求（p.3.5、3.11 反复强调）</td></tr>
+        <tr><td><b>⑮ tan(A±B) 分母符号</b></td><td class="mono">tan(A+B) 分母写 1 + tan A tan B ✗</td><td class="mono">加号配减、减号配加（p.3.32）</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tip"><span class="lbl">自检法</span>把这张表当作「错题本模板」：每次作业/测验收卷后，标出自己撞中了几号陷阱。连续两周不重复同一编号，即视为该陷阱已消除。</div>
+</section>
+
+<!-- ================= 例题索引 ================= -->
+<section id="examples">
+  <div class="sec-head"><span class="no">⑤</span><h2>31 个例题全索引（可筛选）</h2><span class="pg">pp. 3.4 – 3.53</span></div>
+
+  <p>例题是教材的「题眼」：每道例题后都紧跟一道 <b>Instant Drill</b>（同构题）与对应的 Exercise 题号。下表按难度筛选，可按需刷题。</p>
+
+  <div class="filters">
+    <button class="btn active" data-filter="all">全部 31</button>
+    <button class="btn" data-filter="lv1">Level 1（16）</button>
+    <button class="btn" data-filter="lv2">Level 2（15）</button>
+    <button class="btn" data-filter="ex">★ 公开试题衍生（4）</button>
+  </div>
+
+  <div class="tablewrap">
+    <table id="exTable">
+      <thead><tr><th>例</th><th>页</th><th>等级</th><th>主题</th><th>核心技法</th><th>对应练习</th></tr></thead>
+      <tbody>
+        <tr data-lv="lv1"><td>1</td><td>3.4</td><td><span class="badge lv1">L1</span></td><td>度 → 弧度</td><td>× π/180，先约分</td><td>Ex3A 2–4</td></tr>
+        <tr data-lv="lv1"><td>2</td><td>3.5</td><td><span class="badge lv1">L1</span></td><td>弧度 → 度</td><td>× 180/π；3 sig. fig.</td><td>Ex3A 5, 6</td></tr>
+        <tr data-lv="lv1"><td>3</td><td>3.9</td><td><span class="badge lv1">L1</span></td><td>由坐标求六函数值</td><td>先算 r = √(x²+y²)</td><td>Ex3B 1–4</td></tr>
+        <tr data-lv="lv1"><td>4</td><td>3.13</td><td><span class="badge lv1">L1</span></td><td>符号 → 象限</td><td>两条件取交集</td><td>Ex3B 7–10</td></tr>
+        <tr data-lv="lv1"><td>5</td><td>3.13</td><td><span class="badge lv1">L1</span></td><td>由一值求其余</td><td>自设 x、y，符号按象限</td><td>Ex3B 11–13</td></tr>
+        <tr data-lv="lv2"><td>6</td><td>3.14</td><td><span class="badge lv2">L2</span></td><td>两象限 ⇒ 两组答案</td><td>y = ±4 分情况</td><td>Ex3B 21–23</td></tr>
+        <tr data-lv="lv1"><td>7</td><td>3.15</td><td><span class="badge lv1">L1</span></td><td>解方程（度制）</td><td>参考角 + CAST；2x 换元</td><td>Ex3B 14, 15</td></tr>
+        <tr data-lv="lv2"><td>8</td><td>3.16</td><td><span class="badge lv2">L2</span></td><td>解方程（弧度 + 平移）</td><td>区间同步 + 舍根检验</td><td>Ex3B 26</td></tr>
+        <tr data-lv="lv2"><td>9</td><td>3.17</td><td><span class="badge lv2">L2</span></td><td>二次型方程</td><td>因式分解 + 用 |cos|≤1 筛根</td><td>Ex3B 27</td></tr>
+        <tr data-lv="lv1"><td>10</td><td>3.22</td><td><span class="badge lv1">L1</span></td><td>化简（乘积）</td><td>全部拆 sin/cos</td><td>Ex3C 1–6</td></tr>
+        <tr data-lv="lv1"><td>11</td><td>3.22</td><td><span class="badge lv1">L1</span></td><td>用平方恒等式</td><td>1 + tan² = sec²，象限定号</td><td>Ex3C 7, 8</td></tr>
+        <tr data-lv="lv2"><td>12</td><td>3.23</td><td><span class="badge lv2">L2</span></td><td>证明恒等式（分式）</td><td>1 → cosec²−cot²，再因式分解</td><td>Ex3C 16, 17</td></tr>
+        <tr data-lv="lv1"><td>13</td><td>3.25</td><td><span class="badge lv1">L1</span></td><td>诱导公式求值</td><td>拆成特殊角 ± 角</td><td>Ex3C 12</td></tr>
+        <tr data-lv="lv2"><td>14</td><td>3.26</td><td><span class="badge lv2">L2</span></td><td>多重诱导化简</td><td>四角逐个化简，再套平方恒等式</td><td>Ex3C 22, 23</td></tr>
+        <tr data-lv="lv2"><td>15</td><td>3.26–27</td><td><span class="badge lv2">L2</span></td><td>先证后解</td><td>平方后去负号 → 化为 1/(1+cos θ)</td><td>Ex3C 24–27</td></tr>
+        <tr data-lv="lv1"><td>16</td><td>3.33</td><td><span class="badge lv1">L1</span></td><td>求 15°、105° 型值</td><td>拆成两个特殊角的和差</td><td>Ex3D 1–3</td></tr>
+        <tr data-lv="lv1"><td>17</td><td>3.34</td><td><span class="badge lv1">L1</span></td><td>配凑角求 tan A</td><td>A = (A+B) − B</td><td>Ex3D 17, 18</td></tr>
+        <tr data-lv="lv2"><td>18</td><td>3.34</td><td><span class="badge lv2">L2</span></td><td>通分化简</td><td>识别 sin(X−Y) 结构</td><td>Ex3D 19, 20</td></tr>
+        <tr data-lv="lv2"><td>19</td><td>3.35</td><td><span class="badge lv2">L2</span></td><td>cot(α−β) 公式</td><td>先证公式，再比对 α、β</td><td>Ex3D 21</td></tr>
+        <tr data-lv="lv2 ex"><td>20</td><td>3.36</td><td><span class="badge lv2">L2</span> <span class="badge lv3">★</span></td><td>条件恒等式 + 方程</td><td>条件交叉相乘；换元后区间同步</td><td>Ex3D 26–28</td></tr>
+        <tr data-lv="lv1"><td>21</td><td>3.41</td><td><span class="badge lv1">L1</span></td><td>降幂化简</td><td>(1−cos2θ)/sin2θ = tan θ</td><td>Ex3E 4, 5</td></tr>
+        <tr data-lv="lv1"><td>22</td><td>3.41</td><td><span class="badge lv1">L1</span></td><td>反求 tan 15°</td><td>二倍角 + 二次公式 + 舍负根</td><td>Ex3E 10</td></tr>
+        <tr data-lv="lv2 ex"><td>23</td><td>3.42</td><td><span class="badge lv2">L2</span> <span class="badge lv3">★</span></td><td>8cos⁴θ 降幂 + 解方程</td><td>从 R.H.S. 往 L.H.S. 化简</td><td>Ex3E 20–22</td></tr>
+        <tr data-lv="lv2 ex"><td>24</td><td>3.43–44</td><td><span class="badge lv2">L2</span> <span class="badge lv3">★</span></td><td>tan 3x 与乘积恒等式</td><td>tan(2x+x)；猜 x = π/18</td><td>Ex3E 24, 25</td></tr>
+        <tr data-lv="lv1"><td>25</td><td>3.48</td><td><span class="badge lv1">L1</span></td><td>积 → 和</td><td>系数补 1/2；sin(−x) 提负号</td><td>Ex3F 1, 2</td></tr>
+        <tr data-lv="lv1"><td>26</td><td>3.49</td><td><span class="badge lv1">L1</span></td><td>不用计算器求值</td><td>把乘积变成特殊角的和差</td><td>Ex3F 5</td></tr>
+        <tr data-lv="lv2"><td>27</td><td>3.49</td><td><span class="badge lv2">L2</span></td><td>积化和差证恒等式</td><td>常数角互相抵消只剩 2x</td><td>Ex3F 21</td></tr>
+        <tr data-lv="lv1"><td>28</td><td>3.50</td><td><span class="badge lv1">L1</span></td><td>和 → 积</td><td>cos(−θ)=cos θ 去负号</td><td>Ex3F 3, 4</td></tr>
+        <tr data-lv="lv2"><td>29</td><td>3.51</td><td><span class="badge lv2">L2</span></td><td>分式恒等式</td><td>首尾合并 → 提公因式 → 约分</td><td>Ex3F 18–20</td></tr>
+        <tr data-lv="lv2 ex"><td>30</td><td>3.52</td><td><span class="badge lv2">L2</span> <span class="badge lv3">★</span></td><td>三项式因式 + 解方程</td><td>合并首尾产生公因式 sin 2θ</td><td>Ex3F 24, 25</td></tr>
+        <tr data-lv="lv2"><td>31</td><td>3.52–53</td><td><span class="badge lv2">L2</span></td><td>数学归纳法</td><td>五步 + 积化和差完成第 ④ 步</td><td>Ex3F 30, 31</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note"><span class="lbl">难度分布</span>Level 1 = 16 题（52%），Level 2 = 15 题（48%），教材<b>没有 Level 3 例题</b> —— Level 3 只出现在练习中，说明「难题 = 基础例题的组合」，本节表的技法已足够应付。</div>
+</section>
+
+<!-- ================= 练习体系 ================= -->
+<section id="exercises">
+  <div class="sec-head"><span class="no">⑥</span><h2>练习体系矩阵</h2><span class="pg">Exercise 3A–3F + Supplementary 3 + 公开试题</span></div>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>练习</th><th>页码</th><th>题量</th><th>对应节</th><th>难度分布</th><th>核心训练目标</th></tr></thead>
+      <tbody>
+        <tr><td><b>Exercise 3A</b></td><td>3.6–3.7</td><td>14</td><td>3.1</td><td>L1: 1–8　L2: 9–13　L3: 14</td><td>弧度定义、换算、多边形内角</td></tr>
+        <tr><td><b>Exercise 3B</b></td><td>3.18–3.20</td><td>30</td><td>3.2</td><td>L1: 1–15　L2: 16–27　L3: 28–30</td><td>六函数求值、符号、解方程</td></tr>
+        <tr><td><b>Exercise 3C</b></td><td>3.28–3.30</td><td>30</td><td>3.3</td><td>L1: 1–13　L2: 14–28　L3: 29–30</td><td>恒等式化简/证明、诱导公式</td></tr>
+        <tr><td><b>Exercise 3D</b></td><td>3.37–3.39</td><td>32</td><td>3.4</td><td>L1: 1–18　L2: 19–29　L3: 30–32</td><td>复角公式求值、化简、条件恒等式</td></tr>
+        <tr><td><b>Exercise 3E</b></td><td>3.45–3.47</td><td>27</td><td>3.5</td><td>L1: 1–13　L2: 14–25　L3: 26–27</td><td>二倍角、降幂、三倍角</td></tr>
+        <tr><td><b>Exercise 3F</b></td><td>3.55–3.57</td><td>34</td><td>3.6</td><td>L1: 1–15　L2: 16–32　L3: 33–34</td><td>和积互化、归纳法求和</td></tr>
+        <tr><td><b>Supplementary Exercise 3</b></td><td>3.60–3.64</td><td>约 45</td><td>全章</td><td>L1: 1–21　L2: 22–44　L3: 45+</td><td>跨节综合，考前必刷</td></tr>
+        <tr><td><b>Public Exam Questions</b></td><td>3.65–3.67</td><td>9 套 DSE</td><td>全章</td><td>真题原卷</td><td>熟悉分值与答题要求（见下节）</td></tr>
+        <tr><td><b>Chapter Summary</b></td><td>3.58–3.59</td><td>—</td><td>全章</td><td>—</td><td>公式速查 + 6 个示范例</td></tr>
+        <tr><td><b>Inquiry &amp; Investigation</b></td><td>3.67–3.68</td><td>1</td><td>3.4</td><td>—</td><td>用托勒密定理推导 sin(x+y)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>建议刷题优先级</h3>
+  <div class="grid3">
+    <div class="card tight"><h4 style="margin-top:0">第一轮（必做）</h4><p style="margin:0">每个 Exercise 的 Level 1 + 对应例题的 Instant Drill。目标：公式识别速度 &lt; 30 秒/题。</p></div>
+    <div class="card tight"><h4 style="margin-top:0">第二轮（提高）</h4><p style="margin:0">Level 2 中与例题同构的题（表中已标）＋ G 卷 Supplementary 的 L1–L2。</p></div>
+    <div class="card tight"><h4 style="margin-top:0">第三轮（冲星）</h4><p style="margin:0">Level 3 + Public Exam Questions 全 9 套（限时：6 分题 10 分钟、8 分题 14 分钟）。</p></div>
+  </div>
+</section>
+
+<!-- ================= DSE ================= -->
+<section id="dse">
+  <div class="sec-head"><span class="no">⑦</span><h2>DSE 真题年表（教材收录 9 套）</h2><span class="pg">pp. 3.65 – 3.67</span></div>
+
+  <p>教材在章末集中收录了 2012–2022 年的公开试题，构成本章的「考法说明书」。观察这 9 套题的共同点，可归纳出 DSE M2 对本节的三条出题规律：<b>① 必考「证明 + 由此求解」两段式；② 必用和积互化或二倍角降幂；③ 必有一个「猜角 / 配凑」的巧思。</b></p>
+
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>年份</th><th>分值</th><th>题目结构</th><th>核心考点</th></tr></thead>
+      <tbody>
+        <tr><td><b>HKDSE 2022</b></td><td>5</td><td>(a) 证明含 cot / tan 的恒等式　(b) 解该式 = 5（π/4 ≤ θ ≤ π/2）</td><td>复角公式 + cot 变换 + 区间筛解</td></tr>
+        <tr><td><b>HKDSE 2021</b></td><td>6</td><td>(a) 证 cos 2x + cos 4x + cos 6x = 4cos x cos 2x cos 3x − 1　(b) 解 cos 4θ + cos 8θ + cos 12θ = −1</td><td>和差化积（首尾合并）+ 二倍角</td></tr>
+        <tr><td><b>HKDSE 2020</b></td><td>6</td><td>(a) 证 tan 3x 公式与 tan x tan(60°−x) tan(60°+x) = tan 3x　(b) 证 tan 55° tan 65° tan 75° = tan 85°</td><td>tan 3x + 猜角代入（= 例 24 原型）</td></tr>
+        <tr><td><b>HKDSE 2018</b></td><td>5</td><td>(a) cot A = 3cot B ⇒ sin(A+B) = 2sin(B−A)　(b) 借此解方程（0 ≤ x ≤ 2π）</td><td>条件恒等式 + 换元（= 例 20 原型）</td></tr>
+        <tr><td><b>HKDSE 2017</b></td><td>8</td><td>(a) 证 sin 3x = 3sin x − 4sin³x　(b)(i) 化简易分式　(ii) 解方程</td><td>三倍角 + 分式化简 + 区间取舍</td></tr>
+        <tr><td><b>HKDSE 2016</b></td><td>6</td><td>(a) 证 x + 1 是 4x³ + 2x² − 3x − 1 的因式　(b) cos 3θ 用 cos θ 表示　(c) 证 cos(π/5) 的精确值</td><td>三倍角 ↔ 三次方程 ↔ 因式定理（跨主题）</td></tr>
+        <tr><td><b>HKDSE 2015</b></td><td>7</td><td>(a) 证 sin²x cos²x = (1 − cos 4x)/8　(b) f(x)=sin⁴x+cos⁴x 化为 A cos Bx + C　(ii) 解 8f(x) = 7</td><td>降幂公式 + 极值/值域</td></tr>
+        <tr><td><b>HKDSE 2015</b></td><td>8</td><td>(a) 归纳法证 Σ sin kx 公式　(b) 求 Σ<sub>k=1</sub><sup>67</sup> cos(5kπ/7)</td><td>数学归纳法 + 求和恒等式（= 例 31 型）</td></tr>
+        <tr><td><b>HKDSE 2012</b></td><td>6</td><td>等腰三角形 OAB 图形题：(a) 证 y 与 sec²θ 的关系　(b) 求 y 的值域</td><td>三倍角 + 几何建模 + 值域分析</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tip"><span class="lbl">命题规律（据此复习最省力）</span>
+    <ul style="margin-bottom:0">
+      <li><b>6 年里有 5 年考「三项式和差化积」</b>：<span class="math">cos A + cos B + cos C</span> 或 <span class="math">sin A + sin B + sin C</span> 类型，一律「首尾合并 → 提公因式」。</li>
+      <li><b>三倍角是隐藏高频点</b>（2016、2017、2020、2012）：必须能默写 sin 3x、cos 3x、tan 3x。</li>
+      <li><b>归纳法只在 3.6 出现</b>：与求和公式绑定，且答案通常长成 <span class="math">sin(nx/2)sin((n+1)x/2)/sin(x/2)</span>。</li>
+      <li><b>答案形式要求严</b>：π 的精确值、3 位有效数字、"in terms of π" 等，务必照抄题目要求。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= ROADMAP ================= -->
+<section id="roadmap">
+  <div class="sec-head"><span class="no">⑧</span><h2>学习路线与自测清单</h2><span class="pg">建议 3 周完成，可勾选记录</span></div>
+
+  <h3>三周推进表</h3>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>阶段</th><th>内容</th><th>产出标准</th><th>预计用时</th></tr></thead>
+      <tbody>
+        <tr><td><b>第 1 周</b><br>打地基</td><td>3.1 + 3.2（含 Ex 3A、3B 的 L1）</td><td>能 10 分钟默写弧度换算表；能独立完成例 3–9 并解释每一步为何</td><td>5–6 小时</td></tr>
+        <tr><td><b>第 2 周</b><br>抓工具</td><td>3.3 + 3.4（含 Ex 3C、3D 的 L1–L2）</td><td>能默写 48 条诱导公式中的任意一条（用口诀现推）；能证例 12、14 这类分式恒等式</td><td>7–8 小时</td></tr>
+        <tr><td><b>第 3 周</b><br>冲刺</td><td>3.5 + 3.6（含 Ex 3E、3F 的 L2–L3）</td><td>能独立完成 Supplementary 3 的 L2、以及 2018/2020/2021 三年真题</td><td>8–10 小时</td></tr>
+        <tr><td><b>考前</b></td><td>Chapter Summary + 9 套真题限时重做</td><td>6 分题 10 分钟内完成且步骤书写完整</td><td>3–4 小时</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>本卷（M2A Ch.3）掌握度自测</h3>
+  <div class="bar"><i id="progBar"></i></div>
+  <p style="font-size:13px;color:var(--ink3);margin-top:0" id="progText">已完成 0 / 20</p>
+
+  <div class="check" id="checklist">
+    <label><input type="checkbox"><span>能说出弧度的定义（弧长 = 半径 时所对的圆心角），并写出 θ = ℓ/r</span></label>
+    <label><input type="checkbox"><span>能不假思索地互换 30°/45°/60°/90°/120°/135°/150°/180°/270°/360° 与弧度</span></label>
+    <label><input type="checkbox"><span>能正确写出 6 个三角函数的定义式及其分母不为零的条件</span></label>
+    <label><input type="checkbox"><span>能默画 CAST 图并解释每个字母的含义</span></label>
+    <label><input type="checkbox"><span>能说明 sec θ ≠ 1/sin θ，而 = 1/cos θ（并知道为什么容易记错）</span></label>
+    <label><input type="checkbox"><span>能由「一个函数值 + 区间」求出其余五个函数值，并判断是否需要写两组答案</span></label>
+    <label><input type="checkbox"><span>能解 3sec²x − 7sec x + 2 = 0 这类二次型三角方程，并正确筛去 |cos x| &gt; 1 的根</span></label>
+    <label><input type="checkbox"><span>能用「奇变偶不变，符号看象限」现场推出任意一条诱导公式</span></label>
+    <label><input type="checkbox"><span>能默写 sin²θ + cos²θ = 1、1 + tan²θ = sec²θ、1 + cot²θ = cosec²θ</span></label>
+    <label><input type="checkbox"><span>能在证明中把常数 1 替换成 cosec²θ − cot²θ 并因式分解（例 12）</span></label>
+    <label><input type="checkbox"><span>能默写 6 条复角公式，且 cos(A−B) 的符号不会写错</span></label>
+    <label><input type="checkbox"><span>能说出复角公式的推导链（B → −B；A → π/2 − A；tan = sin/cos）</span></label>
+    <label><input type="checkbox"><span>能不用计算器算出 sin 15°、cos 105°、tan 15° 的精确值</span></label>
+    <label><input type="checkbox"><span>会用「配凑角」A = (A+B) − B 而不解方程求 tan A</span></label>
+    <label><input type="checkbox"><span>能证明条件恒等式（如 3tan A = tan B ⇒ sin(A+B) = 2sin(B−A)）并借此解方程</span></label>
+    <label><input type="checkbox"><span>能默写二倍角三种 cos 2A 形式，并按需选择最合适的一种</span></label>
+    <label><input type="checkbox"><span>能默写降幂公式，并完成 8cos⁴θ 这类降幂证明</span></label>
+    <label><input type="checkbox"><span>能默写三倍角 sin 3x、cos 3x、tan 3x</span></label>
+    <label><input type="checkbox"><span>能默写积化和差 3 条与和差化积 4 条（含 cos A − cos B 的负号）</span></label>
+    <label><input type="checkbox"><span>能用「首尾合并」技巧证明三项式恒等式，并用数学归纳法处理求和公式</span></label>
+  </div>
+
+  <div class="tip" style="margin-top:22px"><span class="lbl">达到什么程度算「过关」</span>上面 20 项中勾选 ≥ 17 项，且能限时完成 HKDSE 2018、2020、2021 三套真题，即视为本章达标；若 ≤ 12 项，请回到对应小节重做 Instant Drill 系列（配对练习最短、最精准）。</div>
+</section>
+
+<footer>
+  <p><b>文档说明</b>：本拆解基于 <i>OSM_TBPDF_M2A03_e.pdf</i>（HKDSE 数学延伸部分单元二《代数与微积分》Book M2A 第 3 章，Oxford University Press，72 页）逐页解析生成。所有公式、例题编号、页码、练习题号与难度分级均对应原书；例题答案按原书解法整理，并对关键步骤补充了「为什么这样做」的说明。</p>
+  <p><b>使用建议</b>：先读「① 知识地图」建立框架 → 按 3.1–3.6 顺序精读并配合原书做题 → 考前只看「② 公式总表」与「④ 易错清单」→ 用「⑧ 自测清单」查漏。本页支持打印（自动隐藏导航与按钮，并展开例题详解）与深色模式。</p>
+  <p style="margin-top:14px;color:var(--ink3)">Generated for study purposes · 教材内容版权归 Oxford University Press (China) 及香港考试及评核局所有，本拆解仅作个人学习笔记使用。</p>
+</footer>
+
+</main>
+</div>
+
+<script>
+(function(){
+  /* 主题切换 */
+  var root = document.documentElement;
+  var themeBtn = document.getElementById('themeBtn');
+  var saved = null;
+  try { saved = localStorage.getItem('m2a-theme'); } catch(e){}
+  if(saved) root.setAttribute('data-theme', saved);
+  themeBtn.addEventListener('click', function(){
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('m2a-theme', next); } catch(e){}
+  });
+
+  /* 目录高亮 */
+  var links = Array.prototype.slice.call(document.querySelectorAll('aside.toc a'));
+  var targets = links.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  function syncToc(){
+    var y = window.scrollY + 120, best = null;
+    targets.forEach(function(t){
+      if(t.offsetTop <= y) best = t.id;
+    });
+    links.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#' + best);
+    });
+  }
+  window.addEventListener('scroll', syncToc, {passive:true});
+  syncToc();
+
+  /* 例题筛选 */
+  var filters = document.querySelectorAll('.filters .btn');
+  var rows = Array.prototype.slice.call(document.querySelectorAll('#exTable tbody tr'));
+  Array.prototype.forEach.call(filters, function(btn){
+    btn.addEventListener('click', function(){
+      Array.prototype.forEach.call(filters, function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      var f = btn.getAttribute('data-filter');
+      rows.forEach(function(tr){
+        var lv = tr.getAttribute('data-lv') || '';
+        var show = (f === 'all') || (f === 'ex' ? lv.indexOf('ex') >= 0 : lv.indexOf(f) >= 0);
+        tr.style.display = show ? '' : 'none';
+      });
+    });
+  });
+
+  /* 自测清单进度（localStorage 持久化） */
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('#checklist input[type=checkbox]'));
+  var bar = document.getElementById('progBar');
+  var text = document.getElementById('progText');
+  var KEY = 'm2a-checklist';
+  var state = [];
+  try { state = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch(e){ state = []; }
+  boxes.forEach(function(b, i){ if(state[i]) b.checked = true; });
+  function update(){
+    var n = boxes.filter(function(b){ return b.checked; }).length;
+    bar.style.width = (n / boxes.length * 100) + '%';
+    text.textContent = '已完成 ' + n + ' / ' + boxes.length;
+    try { localStorage.setItem(KEY, JSON.stringify(boxes.map(function(b){ return b.checked; }))); } catch(e){}
+  }
+  boxes.forEach(function(b){ b.addEventListener('change', update); });
+  update();
+
+  /* 打印时展开所有例题 */
+  window.addEventListener('beforeprint', function(){
+    document.querySelectorAll('details').forEach(function(d){ d.open = true; });
+  });
+})();
+</script>
+</body>
+</html>
